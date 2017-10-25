@@ -1,5 +1,5 @@
 struct Edge
 {
-    Point v1;
-    Point v2;
+    int v1;
+    int v2;
 };

@@ -2,6 +2,7 @@
 #define GLWINDOW_H
 
 #include <QMainWindow>
+#include "Polyhedron.h"
 
 namespace Ui {
 class GLWindow;
@@ -17,6 +18,7 @@ public:
 
 private:
     Ui::GLWindow *ui;
+    std::vector<Polyhedron> polyhedrons;
 };
 
 #endif // GLWINDOW_H
