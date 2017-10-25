@@ -15,6 +15,7 @@ class GLWindow : public QMainWindow
 public:
     explicit GLWindow(QWidget *parent = 0);
     ~GLWindow();
+    void OpenData(std::string filename);
 
 private:
     Ui::GLWindow *ui;

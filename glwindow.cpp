@@ -10,12 +10,11 @@ GLWindow::GLWindow(QWidget *parent) :
     ui(new Ui::GLWindow)
 {
     ui->setupUi(this);
+    OpenData("../polyhedrons");
+}
 
-    std::string filename;
-
-    /*std::cout << "Enter the name of the data file, or hit enter to use the default (test_scene): ";
-    std::getline(std::cin, filename);
-    if(filename.empty()) */ filename = "../polyhedrons";
+void GLWindow::OpenData(std::string filename)
+{
     std::ifstream infile(filename);
     std::string line;
     int countPolyhedrons;
