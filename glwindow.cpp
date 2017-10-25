@@ -10,6 +10,7 @@ GLWindow::GLWindow(QWidget *parent) :
     ui(new Ui::GLWindow)
 {
     ui->setupUi(this);
+    QObject::connect(ui->pushButton,&QPushButton::clicked,[=]() { OpenData("../polyhedrons"); });
     OpenData("../polyhedrons");
 }
 
