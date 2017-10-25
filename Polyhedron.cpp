@@ -25,20 +25,26 @@ Point Polyhedron::GetCentroid()
     return centroid;
 }
 
-void Polyhedron::Translate(float x, float y, float z)
+void Polyhedron::Transform(Matrix4f Mtransform)
 {
     for(Point &point : this->points)
     {
-        point.x += x;
-        point.y += y;
-        point.z += z;
+        Vector4f p = {point.x, point.y, point.z, 1};
+        VectorXf pBar = Mtransform * p;
+        point.x = pBar(0);
+        point.y = pBar(1);
+        point.z = pBar(2);
     }
+}
+
+void Polyhedron::Translate(float x, float y, float z)
+{
     Matrix4f Mtransl;
     Mtransl << 1, 0, 0, x,
          0, 1, 0, y,
          0, 0, 1, z,
          0, 0, 0, 1;
-    std::cout << Mtransl << std::endl;
+    Transform(Mtransl);
 }
 
 void Polyhedron::Rotate(float alpha)
@@ -53,13 +59,15 @@ void Polyhedron::Rotate(float alpha)
     }
 }
 
-void Polyhedron::Scale(float alpha, float beta)
+void Polyhedron::Scale(float alpha, float beta, float gamma)
 {
-    for(Point &point : this->points)
-    {
-        point.x *= alpha;
-        point.y *= beta;
-    }
+    Vector4f scale = {alpha, beta, gamma, 1};
+    Matrix4f Mscale = scale.asDiagonal();
+    Transform(Mscale);
+    std::cout << this->points[0].x << this->points[0].y << this->points[0].z << std::endl;
+    std::cout << this->points[1].x << this->points[1].y << this->points[1].z << std::endl;
+    std::cout << this->points[2].x << this->points[2].y << this->points[2].z << std::endl;
+    std::cout << this->points[3].x << this->points[3].y << this->points[3].z << std::endl;
 }
 
 void Polyhedron::CentroidRotate(float alpha)
@@ -74,7 +82,7 @@ void Polyhedron::CentroidScale(float alpha, float beta)
 {
     Point centroid = GetCentroid();
     Translate(-centroid.x, -centroid.y, -centroid.z);
-    Scale(alpha, beta);
+    //Scale(alpha, beta);
     Translate(centroid.x, centroid.y, centroid.z);
 }
 

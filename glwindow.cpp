@@ -79,7 +79,7 @@ void GLWindow::OpenData(std::string filename)
 
         this->polyhedrons.push_back(Polyhedron(points, edges));
     }
-    this->polyhedrons[0].Translate(1, 2, 3);
+    this->polyhedrons[0].Scale(1, 2, 3);
     infile.close();
 }
 
