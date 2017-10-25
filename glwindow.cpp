@@ -10,8 +10,7 @@ GLWindow::GLWindow(QWidget *parent) :
     ui(new Ui::GLWindow)
 {
     ui->setupUi(this);
-    QObject::connect(ui->pushButton,&QPushButton::clicked,[=]() { OpenData("../polyhedrons"); });
-    OpenData("../polyhedrons");
+    QObject::connect(ui->buttonLoad,&QPushButton::clicked,[=]() { OpenData((ui->lineEditFilename->text()).toUtf8().constData()); });
 }
 
 void GLWindow::OpenData(std::string filename)
@@ -80,7 +79,7 @@ void GLWindow::OpenData(std::string filename)
 
         this->polyhedrons.push_back(Polyhedron(points, edges));
     }
-
+    this->polyhedrons[0].Translate(1, 2, 3);
     infile.close();
 }
 

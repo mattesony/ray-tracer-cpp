@@ -1,4 +1,8 @@
 #include "Polyhedron.h"
+#include<iostream>
+#include <Eigen/Eigen>
+
+using namespace Eigen;
 
 Polyhedron::Polyhedron(vector<Point> points, vector<Edge> edges)
 {
@@ -29,6 +33,12 @@ void Polyhedron::Translate(float x, float y, float z)
         point.y += y;
         point.z += z;
     }
+    Matrix4f Mtransl;
+    Mtransl << 1, 0, 0, x,
+         0, 1, 0, y,
+         0, 0, 1, z,
+         0, 0, 0, 1;
+    std::cout << Mtransl << std::endl;
 }
 
 void Polyhedron::Rotate(float alpha)
