@@ -18,13 +18,9 @@ class Polyhedron
         {
             return this->points;
         }
-        vector<Point> GetEdgePoints()
+        vector<Edge> GetEdges()
         {
-            return this->edgePoints;
-        }
-        void AddEdgePoint(Point point)
-        {
-            this->edgePoints.push_back(point);
+            return this->edges;
         }
         Point GetCentroid();
         void Translate(float x, float y, float z);
