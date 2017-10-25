@@ -9,7 +9,7 @@ class GLWidget :
 {
     Q_OBJECT
 public:
-    explicit GLWidget();
+    explicit GLWidget(QWidget *parent = 0);
     ~GLWidget();
 
     void initializeGL();

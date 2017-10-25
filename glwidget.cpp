@@ -1,7 +1,7 @@
-#include "GLWidget.h"
+#include "glwidget.h"
 #include <QDebug>
 
-GLWidget::GLWidget()
+GLWidget::GLWidget(QWidget *parent)
 {
     // Set OpenGL Version information
     // Note: This format must be set before show() is called.

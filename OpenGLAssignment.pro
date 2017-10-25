@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2017-10-23T15:31:33
+# Project created by QtCreator 2017-10-25T11:43:48
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = qt_open_gl_demo
+TARGET = OpenGLAssignment
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -25,11 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    GLWidget.cpp
+        glwindow.cpp \
+    glwidget.cpp
 
 HEADERS += \
-	ui_glwindow.h \
-    GLWidget.h
+        glwindow.h \
+    glwidget.h
 
 FORMS += \
-    glwindow.ui
+        glwindow.ui
