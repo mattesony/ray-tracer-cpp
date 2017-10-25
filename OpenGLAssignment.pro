@@ -26,11 +26,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         glwindow.cpp \
-    glwidget.cpp
+    glwidget.cpp \
+    Polyhedron.cpp
 
 HEADERS += \
         glwindow.h \
-    glwidget.h
+    glwidget.h \
+    Point.h \
+    Polyhedron.h \
+    Edge.h
 
 FORMS += \
         glwindow.ui
