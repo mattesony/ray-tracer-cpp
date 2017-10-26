@@ -40,6 +40,11 @@ GLWindow::GLWindow(QWidget *parent) :
         ui->openGLWidget->polyhedrons[ui->spinObjectID->value()].Translate(ui->spinTranslDx->value(), ui->spinTranslDy->value(), ui->spinTranslDz->value());
         ui->openGLWidget->repaint();
     });
+    QObject::connect(ui->buttonScale, &QPushButton::clicked, [=]()
+    {
+        ui->openGLWidget->polyhedrons[ui->spinObjectID->value()].CentroidScale(ui->spinScaleA->value(), ui->spinScaleB->value(), ui->spinScaleG->value());
+        ui->openGLWidget->repaint();
+    });
 }
 
 GLWindow::~GLWindow()
