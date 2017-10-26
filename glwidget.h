@@ -28,10 +28,11 @@ public:
         this->projection = proj;
     }
 
+    std::vector<Polyhedron> polyhedrons;
+
 private:
      // Private Helpers
     void printContextInformation();
-    std::vector<Polyhedron> polyhedrons;
     std::string projection = "XY";
 
 };
