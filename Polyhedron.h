@@ -30,7 +30,7 @@ class Polyhedron
         void Rotate(float alpha);
         void Scale(float alpha, float beta, float gamma);
         void CentroidRotate(float alpha);
-        void CentroidScale(float alpha, float beta);
+        void CentroidScale(float alpha, float beta, float gamma);
 
     protected:
 

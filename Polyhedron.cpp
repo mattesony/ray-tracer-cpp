@@ -78,11 +78,11 @@ void Polyhedron::CentroidRotate(float alpha)
     Translate(centroid.x, centroid.y, centroid.z);
 }
 
-void Polyhedron::CentroidScale(float alpha, float beta)
+void Polyhedron::CentroidScale(float alpha, float beta, float gamma)
 {
     Point centroid = GetCentroid();
     Translate(-centroid.x, -centroid.y, -centroid.z);
-    //Scale(alpha, beta);
+    Scale(alpha, beta, gamma);
     Translate(centroid.x, centroid.y, centroid.z);
 }
 
