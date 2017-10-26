@@ -23,10 +23,15 @@ public:
     void resizeGL(int width, int height);
     void paintGL();
     void teardownGL();
+    void setProjection(std::string proj)
+    {
+        this->projection = proj;
+    }
 
 private:
      // Private Helpers
     void printContextInformation();
     std::vector<Polyhedron> polyhedrons;
+    std::string projection = "XY";
 
 };

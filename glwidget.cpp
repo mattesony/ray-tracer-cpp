@@ -137,12 +137,38 @@ GLWidget::paintGL(){
     glBegin(GL_LINES);
     //first line will be blue
     glColor3f(0,0,1.0);
-    for(Polyhedron polyhedron : this->polyhedrons)
+
+    if(this->projection == "XY")
     {
-        for(Edge edge : polyhedron.GetEdges())
+        for(Polyhedron polyhedron : this->polyhedrons)
         {
-            glVertex3f(polyhedron.GetPoints()[edge.v1].x, polyhedron.GetPoints()[edge.v1].y, polyhedron.GetPoints()[edge.v1].z);
-            glVertex3f(polyhedron.GetPoints()[edge.v2].x, polyhedron.GetPoints()[edge.v2].y, polyhedron.GetPoints()[edge.v2].z);
+            for(Edge edge : polyhedron.GetEdges())
+            {
+                glVertex2f(polyhedron.GetPoints()[edge.v1].x, polyhedron.GetPoints()[edge.v1].y);
+                glVertex2f(polyhedron.GetPoints()[edge.v2].x, polyhedron.GetPoints()[edge.v2].y);
+            }
+        }
+    }
+    else if(this->projection == "XZ")
+    {
+        for(Polyhedron polyhedron : this->polyhedrons)
+        {
+            for(Edge edge : polyhedron.GetEdges())
+            {
+                glVertex2f(polyhedron.GetPoints()[edge.v1].x, polyhedron.GetPoints()[edge.v1].z);
+                glVertex2f(polyhedron.GetPoints()[edge.v2].x, polyhedron.GetPoints()[edge.v2].z);
+            }
+        }
+    }
+    else if(this->projection == "YZ")
+    {
+        for(Polyhedron polyhedron : this->polyhedrons)
+        {
+            for(Edge edge : polyhedron.GetEdges())
+            {
+                glVertex2f(polyhedron.GetPoints()[edge.v1].y, polyhedron.GetPoints()[edge.v1].z);
+                glVertex2f(polyhedron.GetPoints()[edge.v2].y, polyhedron.GetPoints()[edge.v2].z);
+            }
         }
     }
 
