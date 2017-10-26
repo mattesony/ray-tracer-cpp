@@ -2,6 +2,12 @@
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+
+#include "Polyhedron.h"
 
 class GLWidget :
         public QOpenGLWidget,
@@ -12,6 +18,7 @@ public:
     explicit GLWidget(QWidget *parent = 0);
     ~GLWidget();
 
+    void OpenData(std::string filename);
     void initializeGL();
     void resizeGL(int width, int height);
     void paintGL();
@@ -20,5 +27,6 @@ public:
 private:
      // Private Helpers
     void printContextInformation();
+    std::vector<Polyhedron> polyhedrons;
 
 };

@@ -64,10 +64,12 @@ void Polyhedron::Scale(float alpha, float beta, float gamma)
     Vector4f scale = {alpha, beta, gamma, 1};
     Matrix4f Mscale = scale.asDiagonal();
     Transform(Mscale);
+    /*
     std::cout << this->points[0].x << this->points[0].y << this->points[0].z << std::endl;
     std::cout << this->points[1].x << this->points[1].y << this->points[1].z << std::endl;
     std::cout << this->points[2].x << this->points[2].y << this->points[2].z << std::endl;
     std::cout << this->points[3].x << this->points[3].y << this->points[3].z << std::endl;
+    */
 }
 
 void Polyhedron::CentroidRotate(float alpha)
