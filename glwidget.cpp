@@ -80,7 +80,7 @@ void GLWidget::OpenData(std::string filename)
                 cin >> line;
                 exit(-1);
             }
-            Edge newEdge = {v1, v2};
+            Edge newEdge = {v1-1, v2-1};
             edges.push_back(newEdge);
         }
 
@@ -141,8 +141,8 @@ GLWidget::paintGL(){
     {
         for(Edge edge : polyhedron.GetEdges())
         {
-            glVertex3f(polyhedron.GetPoints()[edge.v1].x,polyhedron.GetPoints()[edge.v1].y, 0);
-            glVertex3f(polyhedron.GetPoints()[edge.v2].x,polyhedron.GetPoints()[edge.v2].y, 0);
+            glVertex3f(polyhedron.GetPoints()[edge.v1].x, polyhedron.GetPoints()[edge.v1].y, polyhedron.GetPoints()[edge.v1].z);
+            glVertex3f(polyhedron.GetPoints()[edge.v2].x, polyhedron.GetPoints()[edge.v2].y, polyhedron.GetPoints()[edge.v2].z);
         }
     }
 

@@ -6,47 +6,69 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>497</width>
-    <height>585</height>
+    <width>1297</width>
+    <height>820</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QFrame" name="frame">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>42</height>
-       </size>
-      </property>
+     <widget class="QFrame" name="frame_2">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QLineEdit" name="lineEditFilename">
-         <property name="text">
-          <string>../polyhedrons</string>
+        <widget class="QFrame" name="frame">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>42</height>
+          </size>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLineEdit" name="lineEditFilename">
+            <property name="text">
+             <string>../polyhedrons</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="buttonLoad">
+            <property name="maximumSize">
+             <size>
+              <width>80</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Load</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="buttonLoad">
-         <property name="maximumSize">
+        <widget class="GLWidget" name="openGLWidget">
+         <property name="minimumSize">
           <size>
-           <width>80</width>
-           <height>20</height>
+           <width>500</width>
+           <height>500</height>
           </size>
-         </property>
-         <property name="text">
-          <string>Load</string>
          </property>
         </widget>
        </item>
@@ -54,7 +76,55 @@
      </widget>
     </item>
     <item>
-     <widget class="GLWidget" name="openGLWidget"/>
+     <widget class="QFrame" name="frame_3">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="minimumSize">
+          <size>
+           <width>63</width>
+           <height>107</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>Projections</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QRadioButton" name="buttonXYProj">
+            <property name="text">
+             <string>XY</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="buttonXZProj">
+            <property name="text">
+             <string>XZ</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="buttonYZProj">
+            <property name="text">
+             <string>YZ</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -63,7 +133,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>497</width>
+     <width>1297</width>
      <height>17</height>
     </rect>
    </property>
