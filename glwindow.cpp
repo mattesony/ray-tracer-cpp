@@ -6,7 +6,7 @@ GLWindow::GLWindow(QWidget *parent) :
     ui(new Ui::GLWindow)
 {
     ui->setupUi(this);
-    QObject::connect(ui->buttonLoad,&QPushButton::clicked,[=]() { ui->openGLWidget->OpenData((ui->lineEditFilename->text()).toUtf8().constData()); });
+    QObject::connect(ui->buttonLoad,&QPushButton::clicked,[=]() { ui->openGLWidget->OpenData((ui->lineEditFilename->text()).toUtf8().constData()); ui->openGLWidget->repaint();});
 }
 
 GLWindow::~GLWindow()

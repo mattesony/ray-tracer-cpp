@@ -86,7 +86,6 @@ void GLWidget::OpenData(std::string filename)
 
         this->polyhedrons.push_back(Polyhedron(points, edges));
     }
-    this->polyhedrons[0].Scale(1, 2, 3);
     infile.close();
 }
 
@@ -138,15 +137,23 @@ GLWidget::paintGL(){
     glBegin(GL_LINES);
     //first line will be blue
     glColor3f(0,0,1.0);
-    glVertex2f(0.1,0.1);
-    glVertex2f(.9,.9);
+    for(Polyhedron polyhedron : this->polyhedrons)
+    {
+        for(Edge edge : polyhedron.GetEdges())
+        {
+            glVertex3f(polyhedron.GetPoints()[edge.v1].x,polyhedron.GetPoints()[edge.v1].y, 0);
+            glVertex3f(polyhedron.GetPoints()[edge.v2].x,polyhedron.GetPoints()[edge.v2].y, 0);
+        }
+    }
 
+    /*
     //this will be a red line
     //notice we can use 3d points too
     //how will this change if we project to the XZ or YZ plane?
     glColor3f(1.0,0.0,0.0);
     glVertex3f(0.1,0.9,0.5);
     glVertex3f(0.9,0.1,0.3);
+    */
     glEnd();
 }
 
