@@ -27,9 +27,8 @@ class Polyhedron
         Point GetCentroid();
         void Transform(Matrix4f Mtransform);
         void Translate(float x, float y, float z);
-        void Rotate(float alpha);
+        void RotateAroundAxis(float alpha, Vector3f pointA, Vector3f pointB);
         void Scale(float alpha, float beta, float gamma);
-        void CentroidRotate(float alpha);
         void CentroidScale(float alpha, float beta, float gamma);
 
     protected:

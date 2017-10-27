@@ -47,7 +47,7 @@ void Polyhedron::Translate(float x, float y, float z)
     Transform(Mtransl);
 }
 
-void Polyhedron::Rotate(float alpha)
+void Polyhedron::RotateAroundAxis(float alpha, Vector3f pointA, Vector3f pointB)
 {
     alpha *= (M_PI / 180);
     for(Point &point : this->points)
@@ -70,14 +70,6 @@ void Polyhedron::Scale(float alpha, float beta, float gamma)
     std::cout << this->points[2].x << this->points[2].y << this->points[2].z << std::endl;
     std::cout << this->points[3].x << this->points[3].y << this->points[3].z << std::endl;
     */
-}
-
-void Polyhedron::CentroidRotate(float alpha)
-{
-    Point centroid = GetCentroid();
-    Translate(-centroid.x, -centroid.y, -centroid.z);
-    Rotate(alpha);
-    Translate(centroid.x, centroid.y, centroid.z);
 }
 
 void Polyhedron::CentroidScale(float alpha, float beta, float gamma)

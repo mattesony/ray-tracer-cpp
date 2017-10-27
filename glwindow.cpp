@@ -1,5 +1,8 @@
 #include "glwindow.h"
 #include "ui_glwindow.h"
+#include <Eigen/Eigen>
+
+using namespace Eigen;
 
 GLWindow::GLWindow(QWidget *parent) :
     QMainWindow(parent),
