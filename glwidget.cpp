@@ -1,5 +1,8 @@
 #include "glwidget.h"
 #include <QDebug>
+#include <Eigen/Eigen>
+
+using namespace Eigen;
 
 GLWidget::GLWidget(QWidget *parent)
 {
@@ -149,14 +152,14 @@ GLWidget::paintGL(){
         }
     }
 
-    /*
-    //this will be a red line
-    //notice we can use 3d points too
-    //how will this change if we project to the XZ or YZ plane?
-    glColor3f(1.0,0.0,0.0);
-    glVertex3f(0.1,0.9,0.5);
-    glVertex3f(0.9,0.1,0.3);
-    */
+    if(drawRotAxis)
+    {
+        glColor3f(1.0,0.0,0.0);
+        glVertex3f(pointA(0), pointA(1), pointA(2));
+        glVertex3f(pointB(0), pointB(1), pointB(2));
+        drawRotAxis = false;
+    }
+
     glEnd();
 }
 

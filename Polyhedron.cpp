@@ -59,12 +59,42 @@ vector<Point> Polyhedron::GetProjectedPoints(std::string projection)
     return projectedPoints;
 }
 
+Vector3f Polyhedron::ProjectPoint(std::string projection, Vector3f point)
+{
+    Matrix4f Mprojection;
+    if(projection == "AxoXY")
+    {
+        Mprojection << 1, 0, 0, 0,
+             0, 1, 0, 0,
+             0, 0, 0, 0,
+             0, 0, 0, 1;
+    }
+    else if(projection == "AxoXZ")
+    {
+        Mprojection << 1, 0, 0, 0,
+             0, 0, 1, 0,
+             0, 0, 0, 0,
+             0, 0, 0, 1;
+    }
+    else if(projection == "AxoYZ")
+    {
+        Mprojection << 0, 1, 0, 0,
+             0, 0, 1, 0,
+             0, 0, 0, 0,
+             0, 0, 0, 1;
+    }
+    Vector4f p;
+    p << point, 1;
+    Vector4f pBar = Mprojection * p;
+    return {pBar(0), pBar(1), pBar(2)};
+}
+
 void Polyhedron::Transform(Matrix4f Mtransform)
 {
     for(Point &point : this->points)
     {
         Vector4f p = {point.x, point.y, point.z, 1};
-        VectorXf pBar = Mtransform * p;
+        Vector4f pBar = Mtransform * p;
         point = {pBar(0), pBar(1), pBar(2)};
     }
 }
@@ -79,16 +109,20 @@ void Polyhedron::Translate(float x, float y, float z)
     Transform(Mtransl);
 }
 
-void Polyhedron::RotateAroundAxis(float alpha, Vector3f pointA, Vector3f pointB)
+void Polyhedron::RotateAroundAxis(float a, Vector3f pointA, Vector3f pointB)
 {
-    alpha *= (M_PI / 180);
-    for(Point &point : this->points)
-    {
-        float newX = cos(alpha) * point.x - sin(alpha) * point.y;
-        float newY = sin(alpha) * point.x + cos(alpha) * point.y;
-        point.x = newX;
-        point.y = newY;
-    }
+    Vector3f nV = (pointB - pointA)/(pointB - pointA).norm();
+    a *= (M_PI / 180);
+    Matrix4f Mrot;
+    Mrot << cos(a) + pow(nV(0), 2) * (1-cos(a)), nV(0) * nV(1) * (1 - cos(a)) - nV(2) * sin(a), nV(0) * nV(2) * (1 - cos(a)) + nV(1) * sin(a), 0,
+         nV(1) * nV(0) * (1 - cos(a)) + nV(2) * sin(a), cos(a) + pow(nV(1), 2) * (1 - cos(a)), nV(1)*nV(2)*(1-cos(a)) - nV(0) * sin(a), 0,
+         nV(2) * nV(0) * (1 - cos(a)) - nV(1) * sin(a), nV(2)*nV(1)*(1-cos(a)) + nV(0) * sin(a), cos(a) + pow(nV(2), 2) * (1-cos(a)), 0,
+         0, 0, 0, 1;
+
+    Translate(-pointA(0), -pointA(1), -pointA(2));
+    Transform(Mrot);
+    Translate(pointA(0), pointA(1), pointA(2));
+    std::cout << nV << std::endl << std::endl << Mrot << std::endl << std::endl;
 }
 
 void Polyhedron::Scale(float alpha, float beta, float gamma)
@@ -96,12 +130,6 @@ void Polyhedron::Scale(float alpha, float beta, float gamma)
     Vector4f scale = {alpha, beta, gamma, 1};
     Matrix4f Mscale = scale.asDiagonal();
     Transform(Mscale);
-    /*
-    std::cout << this->points[0].x << this->points[0].y << this->points[0].z << std::endl;
-    std::cout << this->points[1].x << this->points[1].y << this->points[1].z << std::endl;
-    std::cout << this->points[2].x << this->points[2].y << this->points[2].z << std::endl;
-    std::cout << this->points[3].x << this->points[3].y << this->points[3].z << std::endl;
-    */
 }
 
 void Polyhedron::CentroidScale(float alpha, float beta, float gamma)

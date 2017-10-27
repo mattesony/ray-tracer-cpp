@@ -49,6 +49,38 @@ GLWindow::GLWindow(QWidget *parent) :
         ui->openGLWidget->polyhedrons[ui->spinObjectID->value()].CentroidScale(ui->spinScaleA->value(), ui->spinScaleB->value(), ui->spinScaleG->value());
         ui->openGLWidget->repaint();
     });
+    QObject::connect(ui->buttonRot, &QPushButton::clicked, [=]()
+    {
+        Vector3f pointA;
+        Vector3f pointB;
+        float x, y, z;
+        if(std::stringstream(ui->lineRotPa->text().toStdString()) >> x >> y >> z)
+            pointA = {x, y, z};
+        else
+            std::cout << "Failed to read point " << ui->lineRotPa->text().toStdString() << ": must be formatted like \"0.32 0.0 0.45\"" << std::endl;
+        if(std::stringstream(ui->lineRotPb->text().toStdString()) >> x >> y >> z)
+            pointB = {x, y, z};
+        else
+            std::cout << "Failed to read point " << ui->lineRotPb->text().toStdString() << ": must be formatted like \"0.32 0.0 0.45\"" << std::endl;
+        ui->openGLWidget->polyhedrons[ui->spinObjectID->value()].RotateAroundAxis(ui->spinRotA->value(), pointA, pointB);
+        if (ui->buttonXYProj->isChecked())
+        {
+            ui->openGLWidget->pointA = Polyhedron::ProjectPoint("AxoXY", pointA);
+            ui->openGLWidget->pointB = Polyhedron::ProjectPoint("AxoXY", pointB);
+        }
+        else if(ui->buttonXZProj->isChecked())
+        {
+            ui->openGLWidget->pointA = Polyhedron::ProjectPoint("AxoXZ", pointA);
+            ui->openGLWidget->pointB = Polyhedron::ProjectPoint("AxoXZ", pointB);
+        }
+        else if(ui->buttonYZProj->isChecked())
+        {
+            ui->openGLWidget->pointA = Polyhedron::ProjectPoint("AxoYZ", pointA);
+            ui->openGLWidget->pointB = Polyhedron::ProjectPoint("AxoYZ", pointB);
+        }
+        ui->openGLWidget->drawRotAxis = true;
+        ui->openGLWidget->repaint();
+    });
 }
 
 GLWindow::~GLWindow()

@@ -6,8 +6,11 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-
 #include "Polyhedron.h"
+#include <Eigen/Eigen>
+
+using namespace Eigen;
+
 
 class GLWidget :
         public QOpenGLWidget,
@@ -22,6 +25,7 @@ public:
     void initializeGL();
     void resizeGL(int width, int height);
     void paintGL();
+    void drawLine(Vector3f pointA, Vector3f pointB);
     void teardownGL();
     void setProjection(std::string proj)
     {
@@ -29,10 +33,14 @@ public:
     }
 
     std::vector<Polyhedron> polyhedrons;
+    Vector3f pointA;
+    Vector3f pointB;
+    bool drawRotAxis = false;
 
 private:
      // Private Helpers
     void printContextInformation();
     std::string projection = "AxoXY";
+
 
 };

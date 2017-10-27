@@ -171,7 +171,7 @@
                   <double>999.990000000000009</double>
                  </property>
                  <property name="singleStep">
-                  <double>0.010000000000000</double>
+                  <double>0.050000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -198,7 +198,7 @@
                   <double>999.990000000000009</double>
                  </property>
                  <property name="singleStep">
-                  <double>0.010000000000000</double>
+                  <double>0.050000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -225,7 +225,7 @@
                   <double>999.990000000000009</double>
                  </property>
                  <property name="singleStep">
-                  <double>0.010000000000000</double>
+                  <double>0.050000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -371,7 +371,7 @@
                <item>
                 <widget class="QDoubleSpinBox" name="spinRotA">
                  <property name="decimals">
-                  <number>4</number>
+                  <number>2</number>
                  </property>
                  <property name="minimum">
                   <double>-999.990000000000009</double>
@@ -380,7 +380,7 @@
                   <double>999.990000000000009</double>
                  </property>
                  <property name="singleStep">
-                  <double>0.010000000000000</double>
+                  <double>15.000000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -398,7 +398,7 @@
                <item>
                 <widget class="QLineEdit" name="lineRotPa">
                  <property name="text">
-                  <string>0, 0, 0</string>
+                  <string>0.0 0.0 0.0</string>
                  </property>
                 </widget>
                </item>
@@ -416,7 +416,7 @@
                <item>
                 <widget class="QLineEdit" name="lineRotPb">
                  <property name="text">
-                  <string>1, 1, 1</string>
+                  <string>1.0 1.0 1.0</string>
                  </property>
                 </widget>
                </item>

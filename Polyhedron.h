@@ -27,6 +27,7 @@ class Polyhedron
         }
         Point GetCentroid();
         vector<Point> GetProjectedPoints(std::string projection);
+        static Vector3f ProjectPoint(std::string projection, Vector3f point);
         void Transform(Matrix4f Mtransform);
         void Translate(float x, float y, float z);
         void RotateAroundAxis(float alpha, Vector3f pointA, Vector3f pointB);
