@@ -25,15 +25,47 @@ Point Polyhedron::GetCentroid()
     return centroid;
 }
 
+vector<Point> Polyhedron::GetProjectedPoints(std::string projection)
+{
+    Matrix4f Mprojection;
+    if(projection == "AxoXY")
+    {
+        Mprojection << 1, 0, 0, 0,
+             0, 1, 0, 0,
+             0, 0, 0, 0,
+             0, 0, 0, 1;
+    }
+    else if(projection == "AxoXZ")
+    {
+        Mprojection << 1, 0, 0, 0,
+             0, 0, 1, 0,
+             0, 0, 0, 0,
+             0, 0, 0, 1;
+    }
+    else if(projection == "AxoYZ")
+    {
+        Mprojection << 0, 1, 0, 0,
+             0, 0, 1, 0,
+             0, 0, 0, 0,
+             0, 0, 0, 1;
+    }
+    vector<Point> projectedPoints;
+    for(Point point : this->points)
+    {
+        Vector4f p = {point.x, point.y, point.z, 1};
+        VectorXf pBar = Mprojection * p;
+        projectedPoints.push_back({pBar(0), pBar(1), pBar(2)});
+    }
+    return projectedPoints;
+}
+
 void Polyhedron::Transform(Matrix4f Mtransform)
 {
     for(Point &point : this->points)
     {
         Vector4f p = {point.x, point.y, point.z, 1};
         VectorXf pBar = Mtransform * p;
-        point.x = pBar(0);
-        point.y = pBar(1);
-        point.z = pBar(2);
+        point = {pBar(0), pBar(1), pBar(2)};
     }
 }
 

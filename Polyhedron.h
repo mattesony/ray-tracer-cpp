@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "Edge.h"
 #include <vector>
+#include <string>
 #include <cmath>
 #include <Eigen/Eigen>
 
@@ -25,6 +26,7 @@ class Polyhedron
             return this->edges;
         }
         Point GetCentroid();
+        vector<Point> GetProjectedPoints(std::string projection);
         void Transform(Matrix4f Mtransform);
         void Translate(float x, float y, float z);
         void RotateAroundAxis(float alpha, Vector3f pointA, Vector3f pointB);

@@ -33,6 +33,6 @@ public:
 private:
      // Private Helpers
     void printContextInformation();
-    std::string projection = "XY";
+    std::string projection = "AxoXY";
 
 };

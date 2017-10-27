@@ -22,6 +22,7 @@ GLWidget::~GLWidget()
 
 void GLWidget::OpenData(std::string filename)
 {
+    polyhedrons.clear();
     std::ifstream infile(filename);
     std::string line;
     int countPolyhedrons;
@@ -138,37 +139,13 @@ GLWidget::paintGL(){
     //first line will be blue
     glColor3f(0,0,1.0);
 
-    if(this->projection == "XY")
+    for(Polyhedron polyhedron : this->polyhedrons)
     {
-        for(Polyhedron polyhedron : this->polyhedrons)
+        vector<Point> projectedPoints = polyhedron.GetProjectedPoints(this->projection);
+        for(Edge edge : polyhedron.GetEdges())
         {
-            for(Edge edge : polyhedron.GetEdges())
-            {
-                glVertex2f(polyhedron.GetPoints()[edge.v1].x, polyhedron.GetPoints()[edge.v1].y);
-                glVertex2f(polyhedron.GetPoints()[edge.v2].x, polyhedron.GetPoints()[edge.v2].y);
-            }
-        }
-    }
-    else if(this->projection == "XZ")
-    {
-        for(Polyhedron polyhedron : this->polyhedrons)
-        {
-            for(Edge edge : polyhedron.GetEdges())
-            {
-                glVertex2f(polyhedron.GetPoints()[edge.v1].x, polyhedron.GetPoints()[edge.v1].z);
-                glVertex2f(polyhedron.GetPoints()[edge.v2].x, polyhedron.GetPoints()[edge.v2].z);
-            }
-        }
-    }
-    else if(this->projection == "YZ")
-    {
-        for(Polyhedron polyhedron : this->polyhedrons)
-        {
-            for(Edge edge : polyhedron.GetEdges())
-            {
-                glVertex2f(polyhedron.GetPoints()[edge.v1].y, polyhedron.GetPoints()[edge.v1].z);
-                glVertex2f(polyhedron.GetPoints()[edge.v2].y, polyhedron.GetPoints()[edge.v2].z);
-            }
+            glVertex3f(projectedPoints[edge.v1].x, projectedPoints[edge.v1].y, projectedPoints[edge.v1].z);
+            glVertex3f(projectedPoints[edge.v2].x, projectedPoints[edge.v2].y, projectedPoints[edge.v2].z);
         }
     }
 

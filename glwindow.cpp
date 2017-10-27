@@ -9,6 +9,8 @@ GLWindow::GLWindow(QWidget *parent) :
     ui(new Ui::GLWindow)
 {
     ui->setupUi(this);
+    ui->groupBoxTransformations->setEnabled(false);
+
     QObject::connect(ui->buttonLoad, &QPushButton::clicked, [=]()
     {
         ui->openGLWidget->OpenData((ui->lineEditFilename->text()).toUtf8().constData());
@@ -16,26 +18,26 @@ GLWindow::GLWindow(QWidget *parent) :
         if(ui->openGLWidget->polyhedrons.size() > 0)
         {
             ui->groupBoxTransformations->setEnabled(true);
-            ui->buttonTransl->setEnabled(true);
+            //ui->buttonTransl->setEnabled(true);
         }
         ui->openGLWidget->repaint();
     });
     QObject::connect(ui->buttonXYProj, &QPushButton::clicked, [=](bool toggled)
     {
         if(toggled)
-            ui->openGLWidget->setProjection("XY");
+            ui->openGLWidget->setProjection("AxoXY");
         ui->openGLWidget->repaint();
     });
     QObject::connect(ui->buttonXZProj, &QPushButton::clicked, [=](bool toggled)
     {
         if(toggled)
-            ui->openGLWidget->setProjection("XZ");
+            ui->openGLWidget->setProjection("AxoXZ");
         ui->openGLWidget->repaint();
     });
     QObject::connect(ui->buttonYZProj, &QPushButton::clicked, [=](bool toggled)
     {
         if(toggled)
-            ui->openGLWidget->setProjection("YZ");
+            ui->openGLWidget->setProjection("AxoYZ");
         ui->openGLWidget->repaint();
     });
     QObject::connect(ui->buttonTransl, &QPushButton::clicked, [=]()
