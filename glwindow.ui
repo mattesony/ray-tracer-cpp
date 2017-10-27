@@ -42,7 +42,7 @@
           <item>
            <widget class="QLineEdit" name="lineEditFilename">
             <property name="text">
-             <string>../polyhedrons</string>
+             <string>../polyhedra</string>
             </property>
            </widget>
           </item>

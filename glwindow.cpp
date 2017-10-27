@@ -18,7 +18,6 @@ GLWindow::GLWindow(QWidget *parent) :
         if(ui->openGLWidget->polyhedrons.size() > 0)
         {
             ui->groupBoxTransformations->setEnabled(true);
-            //ui->buttonTransl->setEnabled(true);
         }
         ui->openGLWidget->repaint();
     });
