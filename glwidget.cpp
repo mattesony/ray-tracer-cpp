@@ -79,7 +79,7 @@ void GLWidget::OpenData(std::string filename)
                 cin >> line;
                 exit(-1);
             }
-            Edge newEdge = {v1-1, v2-1};
+            Edge newEdge = {v1, v2};
             edges.push_back(newEdge);
         }
 
@@ -106,7 +106,7 @@ void GLWidget::SaveData(std::string filename)
         fout << polyhedron.GetEdges().size() << endl;
         for(Edge edge : polyhedron.GetEdges())
         {
-            fout << edge.v1 + 1 << " " << edge.v2 + 1 << endl;
+            fout << edge.v1 << " " << edge.v2 << endl;
         }
     }
 
@@ -163,7 +163,25 @@ GLWidget::paintGL(){
     //first line will be blue
     glColor3f(0,0,1.0);
 
+    vector<Polyhedron> clippedPolyhedrons;
+
     for(Polyhedron polyhedron : this->polyhedrons)
+    {
+        int pointsWithinCube = 0;
+        for(Point point : polyhedron.GetPoints())
+        {
+            if((0 <= point.x) && (1 >= point.x) && (0 <= point.y) && (1 >= point.y) && (0 <= point.z) && (1 >= point.z))
+            {
+                pointsWithinCube++;
+            }
+        }
+        if(pointsWithinCube == polyhedron.GetPoints().size())
+        {
+            clippedPolyhedrons.push_back(polyhedron);
+        }
+    }
+
+    for(Polyhedron polyhedron : clippedPolyhedrons)
     {
         vector<Point> projectedPoints = polyhedron.GetProjectedPoints(this->projection);
         for(Edge edge : polyhedron.GetEdges())
