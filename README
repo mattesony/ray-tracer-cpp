@@ -1,0 +1,5 @@
+Build the program with "qmake" and "make", then run with "./OpenGLAssignment" (or just open the .pro project file in Qt Creator with Qt 5.9.2 and run there - I've included a prebuilt executable too, in case there is some issue).
+
+Specify the data file in the text box to the left of the load button. The path of the file is relative to where the executable is. I have my data file one directory above where the execuatble is built to, so there is a "../" that might need to be deleted.
+
+Once the polygons have loaded, a menu will be enabled for performing transformations, switching between axonometric projections, and enabling or disabling clipping once a point of an object exits the unit cube. To perform a transformation, enter to object ID it transform in the menu box, then use the transformation menues. Click the save button to save any changes to the data file entered.
