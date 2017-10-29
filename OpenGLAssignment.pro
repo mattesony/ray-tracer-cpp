@@ -4,9 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+lessThan(QT_MAJOR_VERSION, 5): error("Requires Qt5- run with Qt5's qmake (/usr/lib/x86_64-linux-gnu/qt5/bin/qmake).")
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui widgets
 
 TARGET = OpenGLAssignment
 TEMPLATE = app
