@@ -177,7 +177,7 @@ GLWidget::paintGL(){
 
         for(Polyhedron polyhedron : this->polyhedrons)
         {
-            int pointsWithinCube = 0;
+            unsigned int pointsWithinCube = 0;
             for(Point point : polyhedron.GetPoints())
             {
                 if((0 <= point.x) && (1 >= point.x) && (0 <= point.y) && (1 >= point.y) && (0 <= point.z) && (1 >= point.z))
