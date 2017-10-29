@@ -22,6 +22,7 @@ public:
     ~GLWidget();
 
     void OpenData(std::string filename);
+    void SaveData(std::string filename);
     void initializeGL();
     void resizeGL(int width, int height);
     void paintGL();

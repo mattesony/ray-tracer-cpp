@@ -18,8 +18,13 @@ GLWindow::GLWindow(QWidget *parent) :
         if(ui->openGLWidget->polyhedrons.size() > 0)
         {
             ui->groupBoxTransformations->setEnabled(true);
+            ui->buttonSave->setEnabled(true);
         }
         ui->openGLWidget->repaint();
+    });
+    QObject::connect(ui->buttonSave, &QPushButton::clicked, [=]()
+    {
+        ui->openGLWidget->SaveData((ui->lineEditFilename->text()).toUtf8().constData());
     });
     QObject::connect(ui->buttonXYProj, &QPushButton::clicked, [=](bool toggled)
     {

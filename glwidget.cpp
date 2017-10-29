@@ -93,6 +93,32 @@ void GLWidget::OpenData(std::string filename)
     infile.close();
 }
 
+void GLWidget::SaveData(std::string filename)
+{
+    ofstream fout(filename);
+
+    fout << this->polyhedrons.size() << endl;
+
+    for(Polyhedron polyhedron : this->polyhedrons)
+    {
+        fout << endl;
+        fout << polyhedron.GetPoints().size() << endl;
+        for(Point point : polyhedron.GetPoints())
+        {
+            fout << point.x << " " << point.y << " " << point.z << endl;
+        }
+
+        fout << polyhedron.GetEdges().size() << endl;
+        for(Edge edge : polyhedron.GetEdges())
+        {
+            fout << edge.v1 + 1 << " " << edge.v2 + 1 << endl;
+        }
+    }
+
+    fout.close();
+}
+
+
 void
 GLWidget::initializeGL(){
     // Initialize OpenGL Backend
