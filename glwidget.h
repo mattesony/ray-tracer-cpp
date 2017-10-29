@@ -37,6 +37,8 @@ public:
     Vector3f pointA;
     Vector3f pointB;
     bool drawRotAxis = false;
+    bool clipping = true;
+    bool indicesStartAt1 = true;
 
 private:
      // Private Helpers

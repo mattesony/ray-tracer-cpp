@@ -33,6 +33,9 @@ void GLWidget::OpenData(std::string filename)
 
     std::istringstream(line) >> countPolyhedrons;
 
+    int offset;
+    (this->indicesStartAt1) ? offset = 1 : offset = 0;
+
     for(int polyIndex = 0; polyIndex < countPolyhedrons; polyIndex++)
     {
         do //remove empty lines
@@ -79,7 +82,8 @@ void GLWidget::OpenData(std::string filename)
                 cin >> line;
                 exit(-1);
             }
-            Edge newEdge = {v1, v2};
+
+            Edge newEdge = {v1 - offset, v2 - offset};
             edges.push_back(newEdge);
         }
 
@@ -94,6 +98,9 @@ void GLWidget::SaveData(std::string filename)
 
     fout << this->polyhedrons.size() << endl;
 
+    int offset;
+    (this->indicesStartAt1) ? offset = 1 : offset = 0;
+
     for(Polyhedron polyhedron : this->polyhedrons)
     {
         fout << endl;
@@ -106,7 +113,8 @@ void GLWidget::SaveData(std::string filename)
         fout << polyhedron.GetEdges().size() << endl;
         for(Edge edge : polyhedron.GetEdges())
         {
-            fout << edge.v1 << " " << edge.v2 << endl;
+
+            fout << edge.v1 + offset << " " << edge.v2 + offset << endl;
         }
     }
 
@@ -164,22 +172,28 @@ GLWidget::paintGL(){
     glColor3f(0,0,1.0);
 
     vector<Polyhedron> clippedPolyhedrons;
-
-    for(Polyhedron polyhedron : this->polyhedrons)
+    if(this->clipping)
     {
-        int pointsWithinCube = 0;
-        for(Point point : polyhedron.GetPoints())
+
+        for(Polyhedron polyhedron : this->polyhedrons)
         {
-            if((0 <= point.x) && (1 >= point.x) && (0 <= point.y) && (1 >= point.y) && (0 <= point.z) && (1 >= point.z))
+            int pointsWithinCube = 0;
+            for(Point point : polyhedron.GetPoints())
             {
-                pointsWithinCube++;
+                if((0 <= point.x) && (1 >= point.x) && (0 <= point.y) && (1 >= point.y) && (0 <= point.z) && (1 >= point.z))
+                {
+                    pointsWithinCube++;
+                }
+            }
+            if(pointsWithinCube == polyhedron.GetPoints().size())
+            {
+                clippedPolyhedrons.push_back(polyhedron);
             }
         }
-        if(pointsWithinCube == polyhedron.GetPoints().size())
-        {
-            clippedPolyhedrons.push_back(polyhedron);
-        }
     }
+    else
+        clippedPolyhedrons = this->polyhedrons;
+
 
     for(Polyhedron polyhedron : clippedPolyhedrons)
     {

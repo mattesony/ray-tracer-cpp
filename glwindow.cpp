@@ -44,6 +44,15 @@ GLWindow::GLWindow(QWidget *parent) :
             ui->openGLWidget->setProjection("AxoYZ");
         ui->openGLWidget->repaint();
     });
+    QObject::connect(ui->checkClipping, &QPushButton::clicked, [=](bool checked)
+    {
+        ui->openGLWidget->clipping = (checked) ? true : false;
+        ui->openGLWidget->repaint();
+    });
+    QObject::connect(ui->checkIndices1, &QPushButton::clicked, [=](bool checked)
+    {
+        ui->openGLWidget->indicesStartAt1 = (checked) ? true : false;
+    });
     QObject::connect(ui->buttonTransl, &QPushButton::clicked, [=]()
     {
         ui->openGLWidget->polyhedrons[ui->spinObjectID->value()].Translate(ui->spinTranslDx->value(), ui->spinTranslDy->value(), ui->spinTranslDz->value());
