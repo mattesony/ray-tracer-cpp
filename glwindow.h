@@ -13,6 +13,7 @@ class GLWindow : public QMainWindow
 
 public:
     explicit GLWindow(QWidget *parent = 0);
+    void Repaint();
     ~GLWindow();
 
 private:
