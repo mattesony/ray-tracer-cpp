@@ -2,6 +2,7 @@
 #define GLWINDOW_H
 
 #include <QMainWindow>
+#include <QMessageBox>
 #include "glwidgets.h"
 
 namespace Ui {

@@ -15,10 +15,11 @@ GLWidgets::GLWidgets(GLWidget *openGLWidgetXY, GLWidget *openGLWidgetXZ, GLWidge
     this->openGLWidgetYZ->setProjection("AxoYZ");
 }
 
-void GLWidgets::OpenData(std::string filename)
+bool GLWidgets::OpenData(std::string filename)
 {
     polyhedrons.clear();
     std::ifstream infile(filename);
+    if(!infile) return false;
     std::string line;
     int countPolyhedrons;
     std::getline(infile, line);
@@ -82,11 +83,13 @@ void GLWidgets::OpenData(std::string filename)
         this->polyhedrons.push_back(Polyhedron(points, edges));
     }
     infile.close();
+    return true;
 }
 
-void GLWidgets::SaveData(std::string filename)
+bool GLWidgets::SaveData(std::string filename)
 {
     ofstream fout(filename);
+    if(!fout) return false;
 
     fout << this->polyhedrons.size() << endl;
 
@@ -111,6 +114,7 @@ void GLWidgets::SaveData(std::string filename)
     }
 
     fout.close();
+    return true;
 }
 
 void GLWidgets::Repaint()

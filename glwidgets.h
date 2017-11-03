@@ -9,8 +9,8 @@ class GLWidgets
 public:
     GLWidgets(GLWidget *openGLWidgetXY, GLWidget *openGLWidgetXZ, GLWidget *openGLWidgetYZ);
 
-    void OpenData(std::string filename);
-    void SaveData(std::string filename);
+    bool OpenData(std::string filename);
+    bool SaveData(std::string filename);
 
     void Repaint();
 

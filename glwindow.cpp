@@ -15,7 +15,7 @@ GLWindow::GLWindow(QWidget *parent) :
 
     QObject::connect(ui->buttonLoad, &QPushButton::clicked, [=]()
     {
-        this->glWidgets->OpenData((ui->lineEditFilename->text()).toUtf8().constData());
+        if(!(this->glWidgets->OpenData((ui->lineEditFilename->text()).toUtf8().constData()))) QMessageBox::information(this, "Error", "Failed to load file, check your path." );
         ui->spinObjectID->setMaximum(this->glWidgets->polyhedrons.size() - 1);
         if(this->glWidgets->polyhedrons.size() > 0)
         {
