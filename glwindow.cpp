@@ -22,6 +22,8 @@ GLWindow::GLWindow(QWidget *parent) :
             ui->groupBoxTransformations->setEnabled(true);
             ui->buttonSave->setEnabled(true);
         }
+        else
+            ui->groupBoxTransformations->setEnabled(false);
         Repaint();
     });
     QObject::connect(ui->buttonSave, &QPushButton::clicked, [=]()
