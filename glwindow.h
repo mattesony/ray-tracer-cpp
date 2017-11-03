@@ -2,6 +2,7 @@
 #define GLWINDOW_H
 
 #include <QMainWindow>
+#include "glwidgets.h"
 
 namespace Ui {
 class GLWindow;
@@ -18,6 +19,7 @@ public:
 
 private:
     Ui::GLWindow *ui;
+    GLWidgets *glWidgets;
 };
 
 #endif // GLWINDOW_H

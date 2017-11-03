@@ -21,8 +21,6 @@ public:
     explicit GLWidget(QWidget *parent = 0);
     ~GLWidget();
 
-    void OpenData(std::string filename);
-    void SaveData(std::string filename);
     void initializeGL();
     void resizeGL(int width, int height);
     void paintGL();
@@ -32,18 +30,21 @@ public:
     {
         this->projection = proj;
     }
+    void setPolyhedrons(std::vector<Polyhedron> polyhedrons)
+    {
+        this->polyhedrons = polyhedrons;
+    }
+
 
     std::vector<Polyhedron> polyhedrons;
     Vector3f pointA;
     Vector3f pointB;
     bool drawRotAxis = false;
     bool clipping = true;
-    bool indicesStartAt1 = true;
 
 private:
      // Private Helpers
     void printContextInformation();
     std::string projection = "AxoXY";
-
 
 };

@@ -29,14 +29,16 @@ SOURCES += \
         main.cpp \
         glwindow.cpp \
     glwidget.cpp \
-    Polyhedron.cpp
+    Polyhedron.cpp \
+    glwidgets.cpp
 
 HEADERS += \
         glwindow.h \
     glwidget.h \
     Point.h \
     Polyhedron.h \
-    Edge.h
+    Edge.h \
+    glwidgets.h
 
 FORMS += \
         glwindow.ui
