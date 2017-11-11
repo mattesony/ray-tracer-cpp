@@ -4,10 +4,11 @@
 
 using namespace Eigen;
 
-Polyhedron::Polyhedron(vector<Point> points, vector<Edge> edges)
+Polyhedron::Polyhedron(vector<Point> points, vector<Edge> edges, int material)
 {
     this->points = points;
     this->edges = edges;
+    this->material = material;
 }
 
 Point Polyhedron::GetCentroid()

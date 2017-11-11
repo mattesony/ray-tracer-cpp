@@ -15,7 +15,7 @@ using namespace std;
 class Polyhedron
 {
     public:
-        Polyhedron(vector<Point> points, vector<Edge> edges);
+        Polyhedron(vector<Point> points, vector<Edge> edges, int material);
         virtual ~Polyhedron();
         vector<Point> GetPoints()
         {
@@ -24,6 +24,10 @@ class Polyhedron
         vector<Edge> GetEdges()
         {
             return this->edges;
+        }
+        int GetMaterial()
+        {
+            return this->material;
         }
         Point GetCentroid();
         vector<Point> GetProjectedPoints(std::string projection);
@@ -34,11 +38,10 @@ class Polyhedron
         void Scale(float alpha, float beta, float gamma);
         void CentroidScale(float alpha, float beta, float gamma);
 
-    protected:
-
     private:
         vector<Point> points;
         vector<Edge> edges;
+        int material;
 };
 
 #endif // POLYHEDRON_H

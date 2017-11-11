@@ -42,7 +42,7 @@
           <item>
            <widget class="QLineEdit" name="lineEditFilename">
             <property name="text">
-             <string>../bunny_scene</string>
+             <string>../test_objs.txt</string>
             </property>
            </widget>
           </item>
@@ -487,7 +487,7 @@
      <x>0</x>
      <y>0</y>
      <width>891</width>
-     <height>19</height>
+     <height>17</height>
     </rect>
    </property>
   </widget>

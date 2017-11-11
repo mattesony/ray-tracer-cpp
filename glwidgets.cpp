@@ -36,7 +36,9 @@ bool GLWidgets::OpenData(std::string filename)
             std::getline(infile, line);
         }
         while(line.empty());
-        int countPoints;
+        int material, countPoints;
+        std::istringstream(line) >> material;
+        std::getline(infile, line);
         std::istringstream(line) >> countPoints;
         std::vector<Point> points;
 
@@ -80,7 +82,7 @@ bool GLWidgets::OpenData(std::string filename)
             edges.push_back(newEdge);
         }
 
-        this->polyhedrons.push_back(Polyhedron(points, edges));
+        this->polyhedrons.push_back(Polyhedron(points, edges, material));
     }
     infile.close();
     return true;
@@ -99,6 +101,7 @@ bool GLWidgets::SaveData(std::string filename)
     for(Polyhedron polyhedron : this->polyhedrons)
     {
         fout << endl;
+        fout << polyhedron.GetMaterial() << endl;
         fout << polyhedron.GetPoints().size() << endl;
         for(Point point : polyhedron.GetPoints())
         {
