@@ -22,6 +22,7 @@ public:
     }
 
     std::vector<Polyhedron> polyhedrons;
+
     bool indicesStartAt1 = true;
 
 private:

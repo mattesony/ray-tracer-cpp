@@ -38,7 +38,9 @@ HEADERS += \
     Point.h \
     Polyhedron.h \
     Edge.h \
-    glwidgets.h
+    glwidgets.h \
+    material.h \
+    light.h
 
 FORMS += \
         glwindow.ui
