@@ -48,7 +48,7 @@ GLWidget::resizeGL(int width, int height){
     glLoadIdentity();
 
     //you guys should look up this function
-    glOrtho(0,1.0,0.0,1.0,-10,10);
+    glOrtho(0,width,0.0,height,-10,10);
 
     //clear the modelview matrix
     //the ModelView Matrix can be used in this project, to change the view on the projection
@@ -68,8 +68,7 @@ GLWidget::paintGL(){
 
     glLineWidth(2.0); //sets the "width" of each line we are rendering
 
-    //tells opengl to interperate every two calls to glVertex as a line
-    glBegin(GL_LINES);
+
     //first line will be blue
     glColor3f(0,0,1.0);
 
@@ -95,23 +94,25 @@ GLWidget::paintGL(){
     }
     else
         clippedPolyhedrons = this->polyhedrons;
-
+    glBegin(GL_POINTS);
 
     for(Polyhedron polyhedron : clippedPolyhedrons)
     {
         vector<Point> projectedPoints = polyhedron.GetProjectedPoints(this->projection);
         for(Edge edge : polyhedron.GetEdges())
         {
-            glVertex3f(projectedPoints[edge.v1].x, projectedPoints[edge.v1].y, projectedPoints[edge.v1].z);
-            glVertex3f(projectedPoints[edge.v2].x, projectedPoints[edge.v2].y, projectedPoints[edge.v2].z);
+            glVertex3f(projectedPoints[edge.v1].x*600, projectedPoints[edge.v1].y*600, projectedPoints[edge.v1].z*600);
+            glVertex3f(projectedPoints[edge.v2].x*600, projectedPoints[edge.v2].y*600, projectedPoints[edge.v2].z*600);
         }
     }
 
+    //tells opengl to interperate every two calls to glVertex as a line
+    glBegin(GL_LINES);
     if(drawRotAxis)
     {
         glColor3f(1.0,0.0,0.0);
-        glVertex3f(pointA(0), pointA(1), pointA(2));
-        glVertex3f(pointB(0), pointB(1), pointB(2));
+        glVertex3f(pointA(0)*600, pointA(1)*600, pointA(2)*600);
+        glVertex3f(pointB(0)*600, pointB(1)*600, pointB(2)*600);
         drawRotAxis = false;
     }
 

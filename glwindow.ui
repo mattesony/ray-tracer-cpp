@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>891</width>
-    <height>744</height>
+    <width>1476</width>
+    <height>1370</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -76,8 +76,8 @@
         <widget class="QFrame" name="frame_4">
          <property name="minimumSize">
           <size>
-           <width>600</width>
-           <height>600</height>
+           <width>1226</width>
+           <height>1226</height>
           </size>
          </property>
          <property name="frameShape">
@@ -111,6 +111,12 @@
     </item>
     <item>
      <widget class="QFrame" name="frame_3">
+      <property name="maximumSize">
+       <size>
+        <width>247</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -490,7 +496,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>891</width>
+     <width>1476</width>
      <height>19</height>
     </rect>
    </property>
