@@ -11,7 +11,7 @@ class GLWidgets
 public:
     GLWidgets(GLWidget *openGLWidgetXY, GLWidget *openGLWidgetXZ, GLWidget *openGLWidgetYZ);
 
-    bool OpenData(std::string filename);
+    bool OpenData(std::string filename, std::string matfilename, std::string lightfilename);
     bool SaveData(std::string filename);
 
     void Repaint();
@@ -26,8 +26,6 @@ public:
     std::vector<Polyhedron> polyhedrons;
     std::vector<Material> materials;
     Light light;
-
-    bool indicesStartAt1 = true;
 
 private:
     GLWidget *openGLWidgetXY;

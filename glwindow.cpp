@@ -15,7 +15,10 @@ GLWindow::GLWindow(QWidget *parent) :
 
     QObject::connect(ui->buttonLoad, &QPushButton::clicked, [=]()
     {
-        if(!(this->glWidgets->OpenData((ui->lineEditFilename->text()).toUtf8().constData()))) QMessageBox::information(this, "Error", "Failed to load file, check your path." );
+        if(!(this->glWidgets->OpenData((ui->lineEditFilename->text()).toUtf8().constData(),
+                                       (ui->lineEditMatFile->text()).toUtf8().constData(),
+                                       (ui->lineEditLightFile->text()).toUtf8().constData())))
+            QMessageBox::information(this, "Error", "Failed to load file, check your path." );
         ui->spinObjectID->setMaximum(this->glWidgets->polyhedrons.size() - 1 * (this->glWidgets->polyhedrons.size() > 0));
         if(this->glWidgets->polyhedrons.size() > 0)
         {
@@ -33,11 +36,6 @@ GLWindow::GLWindow(QWidget *parent) :
     QObject::connect(ui->checkClipping, &QPushButton::clicked, [=](bool checked)
     {
         this->glWidgets->SetClipping((checked) ? true : false);
-        Repaint();
-    });
-    QObject::connect(ui->checkIndices1, &QPushButton::clicked, [=](bool checked)
-    {
-        this->glWidgets->indicesStartAt1 = (checked) ? true : false;
         Repaint();
     });
     QObject::connect(ui->buttonTransl, &QPushButton::clicked, [=]()

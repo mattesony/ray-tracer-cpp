@@ -15,7 +15,7 @@ GLWidgets::GLWidgets(GLWidget *openGLWidgetXY, GLWidget *openGLWidgetXZ, GLWidge
     this->openGLWidgetYZ->setProjection("AxoYZ");
 }
 
-bool GLWidgets::OpenData(std::string filename)
+bool GLWidgets::OpenData(std::string filename, std::string matfilename, std::string lightfilename)
 {
     polyhedrons.clear();
     std::ifstream infile(filename);
@@ -25,9 +25,6 @@ bool GLWidgets::OpenData(std::string filename)
     std::getline(infile, line);
 
     std::istringstream(line) >> countPolyhedrons;
-
-    int offset;
-    (this->indicesStartAt1) ? offset = 1 : offset = 0;
 
     for(int polyIndex = 0; polyIndex < countPolyhedrons; polyIndex++)
     {
@@ -78,7 +75,7 @@ bool GLWidgets::OpenData(std::string filename)
                 exit(-1);
             }
 
-            Edge newEdge = {v1 - offset, v2 - offset};
+            Edge newEdge = {v1 - 1, v2 - 1};
             edges.push_back(newEdge);
         }
 
@@ -87,7 +84,7 @@ bool GLWidgets::OpenData(std::string filename)
     infile.close();
 
     materials.clear();
-    std::ifstream matfile("../materials.txt");
+    std::ifstream matfile(matfilename);
     if(!matfile) return false;
     int countMaterials;
     std::getline(matfile, line);
@@ -123,7 +120,7 @@ bool GLWidgets::OpenData(std::string filename)
     }
     matfile.close();
 
-    std::ifstream lightfile("../light.txt");
+    std::ifstream lightfile(lightfilename);
     if(!lightfile) return false;
 
     std::getline(lightfile, line);
@@ -163,9 +160,6 @@ bool GLWidgets::SaveData(std::string filename)
 
     fout << this->polyhedrons.size() << endl;
 
-    int offset;
-    (this->indicesStartAt1) ? offset = 1 : offset = 0;
-
     for(Polyhedron polyhedron : this->polyhedrons)
     {
         fout << endl;
@@ -180,7 +174,7 @@ bool GLWidgets::SaveData(std::string filename)
         for(Edge edge : polyhedron.GetEdges())
         {
 
-            fout << edge.v1 + offset << " " << edge.v2 + offset << endl;
+            fout << edge.v1 + 1 << " " << edge.v2 + 1 << endl;
         }
     }
 

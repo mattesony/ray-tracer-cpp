@@ -123,19 +123,23 @@
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
-            <widget class="QCheckBox" name="checkClipping">
+            <widget class="QLineEdit" name="lineEditMatFile">
              <property name="text">
-              <string>Clipping</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
+              <string>../materials.txt</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkIndices1">
+            <widget class="QLineEdit" name="lineEditLightFile">
              <property name="text">
-              <string>Data file vertex indices start at 1</string>
+              <string>../light.txt</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkClipping">
+             <property name="text">
+              <string>Clipping</string>
              </property>
              <property name="checked">
               <bool>true</bool>
