@@ -85,6 +85,74 @@ bool GLWidgets::OpenData(std::string filename)
         this->polyhedrons.push_back(Polyhedron(points, edges, material));
     }
     infile.close();
+
+    materials.clear();
+    std::ifstream matfile("../materials.txt");
+    if(!matfile) return false;
+    int countMaterials;
+    std::getline(matfile, line);
+    std::istringstream(line) >> countMaterials;
+
+    for(int countIndex = 0; countIndex < countMaterials; countIndex++)
+    {
+        do //remove empty lines
+        {
+            std::getline(matfile, line);
+        }
+        while(line.empty());
+
+        float KaR, KaG, KaB;
+        std::istringstream(line) >> KaR >> KaG >> KaB;
+        Vector3f Ka = {KaR, KaG, KaB};
+
+        std::getline(matfile, line);
+        float KdR, KdG, KdB;
+        std::istringstream(line) >> KdR >> KdG >> KdB;
+        Vector3f Kd = {KdR, KdG, KdB};
+
+        std::getline(matfile, line);
+        float KsR, KsG, KsB;
+        std::istringstream(line) >> KsR >> KsG >> KsB;
+        Vector3f Ks = {KsR, KsG, KsB};
+
+        std::getline(matfile, line);
+        float phongExponent;
+        std::istringstream(line) >> phongExponent;
+
+        materials.push_back({.Ka = Ka, .Kd = Kd, .Ks = Ks, .phongExponent = phongExponent});
+    }
+    matfile.close();
+
+    std::ifstream lightfile("../light.txt");
+    if(!lightfile) return false;
+
+    std::getline(lightfile, line);
+    float Xx, Xy, Xz;
+    std::istringstream(line) >> Xx >> Xy >> Xz;
+    Vector3f X = {Xx, Xy, Xz};
+
+    std::getline(lightfile, line);
+    float LaR, LaG, LaB;
+    std::istringstream(line) >> LaR >> LaG >> LaB;
+    Vector3f La = {LaR, LaG, LaB};
+
+    std::getline(lightfile, line);
+    float LiR, LiG, LiB;
+    std::istringstream(line) >> LiR >> LiG >> LiB;
+    Vector3f Li = {LiR, LiG, LiB};
+
+    std::getline(lightfile, line);
+    float F;
+    std::istringstream(line) >> F;
+
+    std::getline(lightfile, line);
+    float K;
+    std::istringstream(line) >> K;
+
+    light = {.X = X, .La = La, .Li = Li, .F = F, .K = K};
+
+    lightfile.close();
+
     return true;
 }
 

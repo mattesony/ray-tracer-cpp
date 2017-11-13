@@ -3,6 +3,8 @@
 
 #include <glwidget.h>
 #include "Polyhedron.h"
+#include "light.h"
+#include "material.h"
 
 class GLWidgets
 {
@@ -22,6 +24,8 @@ public:
     }
 
     std::vector<Polyhedron> polyhedrons;
+    std::vector<Material> materials;
+    Light light;
 
     bool indicesStartAt1 = true;
 
