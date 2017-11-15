@@ -119,18 +119,52 @@ GLWidget::paintGL(){
     glEnd();
 }
 
-void GLWidget::Megapixel(float x, float y)
+void GLWidget::Megapixel(float x, float y, Vector3f color)
 {
+    char cells[3][3] = {0};
+    float noOn = 9 * std::max(std::max(color(0), color(1)), color(2));
+    int noR = round(color(0) * noOn / (color(0) + color(1) + color(2)));
+    for(int i = 0; i < noR; i++)
+    {
+        int cell = rand() % (9);
+        if(cells[cell / 3][cell % 3])
+        {
+            i--;
+        }
+        else
+           cells[cell / 3][cell % 3] = 'r';
+    }
+    int noG = round(color(1) * noOn / (color(0) + color(1) + color(2)));
+    for(int i = 0; i < noG; i++)
+    {
+        int cell = rand() % (9);
+        if(cells[cell / 3][cell % 3])
+        {
+            i--;
+        }
+        else
+           cells[cell / 3][cell % 3] = 'g';
+    }
+    int noB = round(color(2) * noOn / (color(0) + color(1) + color(2)));
+    for(int i = 0; i < noB; i++)
+    {
+        int cell = rand() % (9);
+        if(cells[cell / 3][cell % 3])
+        {
+            i--;
+        }
+        else
+           cells[cell / 3][cell % 3] = 'b';
+    }
     glBegin(GL_POINTS);
-    glVertex2f(x-1, y-1);
-    glVertex2f(x, y-1);
-    glVertex2f(x+1, y-1);
-    glVertex2f(x-1, y);
-    glVertex2f(x, y);
-    glVertex2f(x+1, y);
-    glVertex2f(x-1, y+1);
-    glVertex2f(x, y+1);
-    glVertex2f(x+1, y+1);
+    for(int i = 0; i < 2; i++)
+    {
+        for(int j = 0; j < 2; j++)
+        {
+            glColor3f(1.0 * (cells[i][j] == 'r'), 1.0 * (cells[i][j] == 'g'), 1.0 * (cells[i][j] == 'b'));
+            glVertex2f(x + i - 1, y + j - 1);
+        }
+    }
     glEnd();
 }
 
@@ -144,21 +178,21 @@ void GLWidget::DrawBresenham(Vector2f pointA, Vector2f pointB)
     {
         for(int j = 1; j < max(pointB(0), pointA(0)) - min(pointB(0), pointA(0)); j+=3)
         {
-            Megapixel(min(pointB(0), pointA(0)) + j, pointA(1));
+            Megapixel(min(pointB(0), pointA(0)) + j, pointA(1), {1, 0, 0});
         }
     }
     else if(pointB(0) - pointA(0) == 0)
     {
         for(int j = 1; j < max(pointB(1), pointA(1)) - min(pointB(1), pointA(1)); j+=3)
         {
-            Megapixel(pointA(0), min(pointB(1), pointA(1)) + j);
+            Megapixel(pointA(0), min(pointB(1), pointA(1)) + j, {0, 0, 1});
         }
     }
     else if(1 == abs(slope))
     {
         for(int j = 1; j < max(pointB(0), pointA(0)) - min(pointB(0), pointA(0)); j+=3)
         {
-            Megapixel(min(pointB(0), pointA(0)) + j, (slope == 1) ? min(pointB(1), pointA(1)) + j : max(pointB(1), pointA(1)) - j);
+            Megapixel(min(pointB(0), pointA(0)) + j, (slope == 1) ? min(pointB(1), pointA(1)) + j : max(pointB(1), pointA(1)) - j, {0.0, 0.2, 0});
         }
     }
     bool slopeLessThanOne = fabs(slope) < 1;
@@ -186,7 +220,7 @@ void GLWidget::DrawBresenham(Vector2f pointA, Vector2f pointB)
         x = x1;
         y = y1;
     }
-    Megapixel(slopeLessThanOne ? x : y, (slopeLessThanOne ? y : x) * ((!slopePositive) ? -1 : 1));
+    Megapixel(slopeLessThanOne ? x : y, (slopeLessThanOne ? y : x) * ((!slopePositive) ? -1 : 1), {0, 1, 0});
     while(x < x2)
     {
         x+=3;
@@ -197,12 +231,13 @@ void GLWidget::DrawBresenham(Vector2f pointA, Vector2f pointB)
             y+=3;
             p += twoDyMinusDx;
         }
-        Megapixel(slopeLessThanOne ? x : y, (slopeLessThanOne ? y : x) * ((!slopePositive) ? -1 : 1));
+        Megapixel(slopeLessThanOne ? x : y, (slopeLessThanOne ? y : x) * ((!slopePositive) ? -1 : 1), {1, 0, 0});
     }
 }
 
 /*
 void FillPolygon(int polygon)
+    sec_die = rand() % (HIGH - LOW + 1) + LOW;
 {
     vector<Point> points = polygons[polygon].GetPoints();
     Point bbLowerLeftCorner = points[0];
