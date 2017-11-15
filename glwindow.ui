@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1476</width>
-    <height>1370</height>
+    <width>1163</width>
+    <height>1068</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -76,8 +76,8 @@
         <widget class="QFrame" name="frame_4">
          <property name="minimumSize">
           <size>
-           <width>1226</width>
-           <height>1226</height>
+           <width>926</width>
+           <height>926</height>
           </size>
          </property>
          <property name="frameShape">
@@ -496,8 +496,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1476</width>
-     <height>19</height>
+     <width>1163</width>
+     <height>17</height>
     </rect>
    </property>
   </widget>
