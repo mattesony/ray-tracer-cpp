@@ -99,9 +99,9 @@ GLWidget::paintGL(){
         vector<Point> projectedPoints = polyhedron.GetProjectedPoints(this->projection);
         for(Triangle triangle : polyhedron.GetTriangles())
         {
-            DrawBresenham({projectedPoints[triangle.v1].x*450, projectedPoints[triangle.v1].y*450}, {projectedPoints[triangle.v2].x*450, projectedPoints[triangle.v2].y*450});
-            DrawBresenham({projectedPoints[triangle.v2].x*450, projectedPoints[triangle.v2].y*450}, {projectedPoints[triangle.v3].x*450, projectedPoints[triangle.v3].y*450});
-            DrawBresenham({projectedPoints[triangle.v3].x*450, projectedPoints[triangle.v3].y*450}, {projectedPoints[triangle.v1].x*450, projectedPoints[triangle.v1].y*450});
+            DrawBresenham({projectedPoints[triangle.v1].x*450, projectedPoints[triangle.v1].y*450}, {projectedPoints[triangle.v2].x*450, projectedPoints[triangle.v2].y*450}, {1, 0, 0}, {0, 1, 0});
+            DrawBresenham({projectedPoints[triangle.v2].x*450, projectedPoints[triangle.v2].y*450}, {projectedPoints[triangle.v3].x*450, projectedPoints[triangle.v3].y*450}, {0,0,1}, {1,0,0});
+            DrawBresenham({projectedPoints[triangle.v3].x*450, projectedPoints[triangle.v3].y*450}, {projectedPoints[triangle.v1].x*450, projectedPoints[triangle.v1].y*450},{0,1,0}, {0,0,1});
 //            Megapixel(projectedPoints[edge.v1].x*450, projectedPoints[edge.v1].y*450);
 //            Megapixel(projectedPoints[edge.v2].x*450, projectedPoints[edge.v2].y*450);
         }
@@ -168,8 +168,18 @@ void GLWidget::Megapixel(float x, float y, Vector3f color)
     glEnd();
 }
 
+Vector3f GLWidget::linInt(Vector3f colorA, Vector3f colorB, float t)
+{
+    float r = colorA(0) + (colorB(0) - colorA(0)) * t;
+    float g = colorA(1) + (colorB(1) - colorA(1)) * t;
+    float b = colorA(2) + (colorB(2) - colorA(2)) * t;
+    Vector3f rgb = {r, g, b};
+    return rgb;
+}
+
+
 // Adapted from the book
-void GLWidget::DrawBresenham(Vector2f pointA, Vector2f pointB)
+void GLWidget::DrawBresenham(Vector2f pointA, Vector2f pointB, Vector3f colorA, Vector3f colorB)
 {
     float slope = (pointB(1) - pointA(1))/(pointB(0) - pointA(0));
     // Special cases
