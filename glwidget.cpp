@@ -31,7 +31,7 @@ GLWidget::initializeGL(){
     printContextInformation();
 
     // Set global information
-    glClearColor(1.0f,1.0f,1.0f,1.0f);
+    glClearColor(0.0f,0.0f,0.0f,0.0f);
 
     printContextInformation();
 }
@@ -101,8 +101,8 @@ GLWidget::paintGL(){
         vector<Point> projectedPoints = polyhedron.GetProjectedPoints(this->projection);
         for(Edge edge : polyhedron.GetEdges())
         {
-            glVertex3f(projectedPoints[edge.v1].x*600, projectedPoints[edge.v1].y*600, projectedPoints[edge.v1].z*600);
-            glVertex3f(projectedPoints[edge.v2].x*600, projectedPoints[edge.v2].y*600, projectedPoints[edge.v2].z*600);
+            Megapixel(projectedPoints[edge.v1].x*450, projectedPoints[edge.v1].y*450);
+            Megapixel(projectedPoints[edge.v2].x*450, projectedPoints[edge.v2].y*450);
         }
     }
 
@@ -111,12 +111,25 @@ GLWidget::paintGL(){
     if(drawRotAxis)
     {
         glColor3f(1.0,0.0,0.0);
-        glVertex3f(pointA(0)*600, pointA(1)*600, pointA(2)*600);
-        glVertex3f(pointB(0)*600, pointB(1)*600, pointB(2)*600);
+        glVertex3f(pointA(0)*450, pointA(1)*450, pointA(2)*450);
+        glVertex3f(pointB(0)*450, pointB(1)*450, pointB(2)*450);
         drawRotAxis = false;
     }
 
     glEnd();
+}
+
+void GLWidget::Megapixel(float x, float y)
+{
+    glVertex2f(x-1, y-1);
+    glVertex2f(x, y-1);
+    glVertex2f(x+1, y-1);
+    glVertex2f(x-1, y);
+    glVertex2f(x, y);
+    glVertex2f(x+1, y);
+    glVertex2f(x-1, y+1);
+    glVertex2f(x, y+1);
+    glVertex2f(x+1, y+1);
 }
 
 void

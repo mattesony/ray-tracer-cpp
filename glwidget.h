@@ -24,6 +24,7 @@ public:
     void initializeGL();
     void resizeGL(int width, int height);
     void paintGL();
+    void Megapixel(float x, float y);
     void drawLine(Vector3f pointA, Vector3f pointB);
     void teardownGL();
     void setProjection(std::string proj)
