@@ -3,7 +3,7 @@
 
 
 #include "Point.h"
-#include "Edge.h"
+#include "Triangle.h"
 #include <vector>
 #include <string>
 #include <cmath>
@@ -15,15 +15,15 @@ using namespace std;
 class Polyhedron
 {
     public:
-        Polyhedron(vector<Point> points, vector<Edge> edges, int material);
+        Polyhedron(vector<Point> points, vector<Triangle> triangles, int material);
         virtual ~Polyhedron();
         vector<Point> GetPoints()
         {
             return this->points;
         }
-        vector<Edge> GetEdges()
+        vector<Triangle> GetTriangles()
         {
-            return this->edges;
+            return this->triangles;
         }
         int GetMaterial()
         {
@@ -40,7 +40,7 @@ class Polyhedron
 
     private:
         vector<Point> points;
-        vector<Edge> edges;
+        vector<Triangle> triangles;
         int material;
 };
 

@@ -40,7 +40,8 @@ HEADERS += \
     Edge.h \
     glwidgets.h \
     material.h \
-    light.h
+    light.h \
+    Triangle.h
 
 FORMS += \
         glwindow.ui

@@ -4,10 +4,10 @@
 
 using namespace Eigen;
 
-Polyhedron::Polyhedron(vector<Point> points, vector<Edge> edges, int material)
+Polyhedron::Polyhedron(vector<Point> points, vector<Triangle> triangles, int material)
 {
     this->points = points;
-    this->edges = edges;
+    this->triangles = triangles;
     this->material = material;
 }
 

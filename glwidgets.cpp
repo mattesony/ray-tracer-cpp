@@ -59,27 +59,27 @@ bool GLWidgets::OpenData(std::string filename, std::string matfilename, std::str
             std::getline(infile, line);
         }
         while(line.empty());
-        int countEdges;
-        std::istringstream(line) >> countEdges;
-        std::vector<Edge> edges;
+        int countTriangles;
+        std::istringstream(line) >> countTriangles;
+        std::vector<Triangle> triangles;
 
-        for(int edgeIndex = 0; edgeIndex < countEdges; edgeIndex++)
+        for(int triangleIndex = 0; triangleIndex < countTriangles; triangleIndex++)
         {
             std::getline(infile, line);
-            int v1, v2;
-            if(!(std::istringstream(line) >> v1 >> v2))
+            int v1, v2, v3;
+            if(!(std::istringstream(line) >> v1 >> v2 >> v3))
             {
                 break;
-                cout << "Failed to read edge " << line << ": must be formatted like \"1 2\"" << endl;
+                cout << "Failed to read edge " << line << ": must be formatted like \"1 2 3\"" << endl;
                 cin >> line;
                 exit(-1);
             }
 
-            Edge newEdge = {v1 - 1, v2 - 1};
-            edges.push_back(newEdge);
+            Triangle newTriangle = {v1 - 1, v2 - 1, v3 - 1};
+            triangles.push_back(newTriangle);
         }
 
-        this->polyhedrons.push_back(Polyhedron(points, edges, material));
+        this->polyhedrons.push_back(Polyhedron(points, triangles, material));
     }
     infile.close();
 
@@ -170,11 +170,11 @@ bool GLWidgets::SaveData(std::string filename)
             fout << point.x << " " << point.y << " " << point.z << endl;
         }
 
-        fout << polyhedron.GetEdges().size() << endl;
-        for(Edge edge : polyhedron.GetEdges())
+        fout << polyhedron.GetTriangles().size() << endl;
+        for(Triangle triangle : polyhedron.GetTriangles())
         {
 
-            fout << edge.v1 + 1 << " " << edge.v2 + 1 << endl;
+            fout << triangle.v1 + 1 << " " << triangle.v2 + 1 << " " << triangle.v3 + 1 << endl;
         }
     }
 
