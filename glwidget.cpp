@@ -99,9 +99,21 @@ GLWidget::paintGL(){
         vector<Point> projectedPoints = polyhedron.GetProjectedPoints(this->projection);
         for(Triangle triangle : polyhedron.GetTriangles())
         {
-            DrawBresenham({projectedPoints[triangle.v1].x*450, projectedPoints[triangle.v1].y*450}, {projectedPoints[triangle.v2].x*450, projectedPoints[triangle.v2].y*450}, {1, 0, 0}, {0, 1, 0});
-            DrawBresenham({projectedPoints[triangle.v2].x*450, projectedPoints[triangle.v2].y*450}, {projectedPoints[triangle.v3].x*450, projectedPoints[triangle.v3].y*450}, {0,0,1}, {1,0,0});
-            DrawBresenham({projectedPoints[triangle.v3].x*450, projectedPoints[triangle.v3].y*450}, {projectedPoints[triangle.v1].x*450, projectedPoints[triangle.v1].y*450},{0,1,0}, {0,0,1});
+            Vector3f vertex1 = {projectedPoints[triangle.v1].x,
+                                projectedPoints[triangle.v1].y,
+                                projectedPoints[triangle.v1].z};
+            Vector3f vertex2 = {projectedPoints[triangle.v2].x,
+                                projectedPoints[triangle.v2].y,
+                                projectedPoints[triangle.v2].z};
+            Vector3f vertex3 = {projectedPoints[triangle.v3].x,
+                                projectedPoints[triangle.v3].y,
+                                projectedPoints[triangle.v3].z};
+            Vector3f normal1 = ((vertex2 - vertex1).cwiseProduct(vertex3 - vertex1)).normalized();
+            Vector3f normal2 = ((vertex3 - vertex2).cwiseProduct(vertex1 - vertex2)).normalized();
+            Vector3f normal3 = ((vertex1 - vertex3).cwiseProduct(vertex2 - vertex3)).normalized();
+            DrawBresenham({projectedPoints[triangle.v1].x*450, projectedPoints[triangle.v1].y*450}, {projectedPoints[triangle.v2].x*450, projectedPoints[triangle.v2].y*450}, normal1.cwiseAbs(), normal2.cwiseAbs());
+            DrawBresenham({projectedPoints[triangle.v2].x*450, projectedPoints[triangle.v2].y*450}, {projectedPoints[triangle.v3].x*450, projectedPoints[triangle.v3].y*450}, normal2.cwiseAbs(), normal3.cwiseAbs());
+            DrawBresenham({projectedPoints[triangle.v3].x*450, projectedPoints[triangle.v3].y*450}, {projectedPoints[triangle.v1].x*450, projectedPoints[triangle.v1].y*450}, normal3.cwiseAbs(), normal1.cwiseAbs());
         }
     }
 
@@ -261,7 +273,7 @@ void GLWidget::DrawBresenham(Vector2f pointA, Vector2f pointB, Vector3f colorA, 
             x = x1;
             y = y1;
         }
-        Megapixel(slopeLessThanOne ? x : y, (slopeLessThanOne ? y : x) * ((!slopePositive) ? -1 : 1), linInt(colorA, colorB, 1/(totalDist)));
+        Megapixel(slopeLessThanOne ? x : y, (slopeLessThanOne ? y : x) * ((!slopePositive) ? -1 : 1), linInt(colorA, colorB, 1/((totalDist != 0) ? totalDist : 1)));
         while(x < x2)
         {
             x+=3;
@@ -272,7 +284,7 @@ void GLWidget::DrawBresenham(Vector2f pointA, Vector2f pointB, Vector3f colorA, 
                 y+=3;
                 p += twoDyMinusDx;
             }
-            Megapixel(slopeLessThanOne ? x : y, (slopeLessThanOne ? y : x) * ((!slopePositive) ? -1 : 1), linInt(colorA, colorB, (slopeLessThanOne ? x - x1 : y - y1)/(totalDist)));
+            Megapixel(slopeLessThanOne ? x : y, (slopeLessThanOne ? y : x) * ((!slopePositive) ? -1 : 1), linInt(colorA, colorB, (slopeLessThanOne ? x - x1 : y - y1)/((totalDist != 0) ? totalDist : 1)));
         }
     }
 }
