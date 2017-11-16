@@ -102,8 +102,6 @@ GLWidget::paintGL(){
             DrawBresenham({projectedPoints[triangle.v1].x*450, projectedPoints[triangle.v1].y*450}, {projectedPoints[triangle.v2].x*450, projectedPoints[triangle.v2].y*450}, {1, 0, 0}, {0, 1, 0});
             DrawBresenham({projectedPoints[triangle.v2].x*450, projectedPoints[triangle.v2].y*450}, {projectedPoints[triangle.v3].x*450, projectedPoints[triangle.v3].y*450}, {0,0,1}, {1,0,0});
             DrawBresenham({projectedPoints[triangle.v3].x*450, projectedPoints[triangle.v3].y*450}, {projectedPoints[triangle.v1].x*450, projectedPoints[triangle.v1].y*450},{0,1,0}, {0,0,1});
-//            Megapixel(projectedPoints[edge.v1].x*450, projectedPoints[edge.v1].y*450);
-//            Megapixel(projectedPoints[edge.v2].x*450, projectedPoints[edge.v2].y*450);
         }
     }
 
@@ -123,6 +121,7 @@ void GLWidget::Megapixel(float x, float y, Vector3f color)
 {
     char cells[3][3] = {0};
     float noOn = 9 * std::max(std::max(color(0), color(1)), color(2));
+    //if (noOn > 9) noOn = 9;
     int noR = round(color(0) * noOn / (color(0) + color(1) + color(2)));
     for(int i = 0; i < noR; i++)
     {
@@ -186,62 +185,95 @@ void GLWidget::DrawBresenham(Vector2f pointA, Vector2f pointB, Vector3f colorA, 
 
     if(pointB(1) - pointA(1) == 0)
     {
-        for(int j = 1; j < max(pointB(0), pointA(0)) - min(pointB(0), pointA(0)); j+=3)
+        float xDist = max(pointB(0), pointA(0)) - min(pointB(0), pointA(0));
+        for(int j = 1; j < xDist; j+=3)
         {
-            Megapixel(min(pointB(0), pointA(0)) + j, pointA(1), {1, 0, 0});
+            if (pointB(0) >= pointA(0))
+            {
+                Megapixel(pointA(0) + j, pointA(1), linInt(colorA, colorB, j/xDist));
+            }
+            else if (pointB(0) < pointA(0))
+            {
+                Megapixel(pointB(0) + j, pointA(1), linInt(colorB, colorA, j/xDist));
+            }
         }
     }
     else if(pointB(0) - pointA(0) == 0)
     {
-        for(int j = 1; j < max(pointB(1), pointA(1)) - min(pointB(1), pointA(1)); j+=3)
+        float yDist = max(pointB(1), pointA(1)) - min(pointB(1), pointA(1));
+        for(int j = 1; j < yDist; j+=3)
         {
-            Megapixel(pointA(0), min(pointB(1), pointA(1)) + j, {0, 0, 1});
+            if (pointB(1) >= pointA(1))
+            {
+                Megapixel(pointA(0), pointA(1) + j, linInt(colorA, colorB, j/yDist));
+            }
+            if (pointB(1) < pointA(1))
+            {
+                Megapixel(pointA(0), pointB(1) + j, linInt(colorB, colorA, j/yDist));
+            }
+
         }
     }
     else if(1 == abs(slope))
     {
-        for(int j = 1; j < max(pointB(0), pointA(0)) - min(pointB(0), pointA(0)); j+=3)
+        float xDist = max(pointB(0), pointA(0)) - min(pointB(0), pointA(0));
+        for(int j = 1; j < xDist; j+=3)
         {
-            Megapixel(min(pointB(0), pointA(0)) + j, (slope == 1) ? min(pointB(1), pointA(1)) + j : max(pointB(1), pointA(1)) - j, {0.0, 0.2, 0});
+            if (pointB(0) >= pointA(0))
+            {
+                Megapixel(pointA(0) + j, (slope == 1) ? min(pointB(1), pointA(1)) + j : max(pointB(1), pointA(1)) - j, linInt(colorA, colorB, j/xDist));
+            }
+            else if (pointB(0) < pointA(0))
+            {
+                Megapixel(pointB(0) + j, (slope == 1) ? min(pointB(1), pointA(1)) + j : max(pointB(1), pointA(1)) - j, linInt(colorB, colorA, j/xDist));
+            }
         }
-    }
-    bool slopeLessThanOne = fabs(slope) < 1;
-    bool slopePositive = slope > 0;
-    int x1 = (slopeLessThanOne ? pointA(0) : pointA(1)) * ((!slopeLessThanOne && !slopePositive) ? -1 : 1);
-    int y1 = (slopeLessThanOne ? pointA(1) : pointA(0)) * ((slopeLessThanOne && !slopePositive) ? -1 : 1);
-    int x2 = (slopeLessThanOne ? pointB(0) : pointB(1)) * ((!slopeLessThanOne && !slopePositive) ? -1 : 1);
-    int y2 = (slopeLessThanOne ? pointB(1) : pointB(0)) * ((slopeLessThanOne && !slopePositive) ? -1 : 1);
-    int dx = fabs(x2 - x1);
-    int dy = fabs(y2 - y1);
-    int p = 2 * dy - dx;
-    int twoDy = 2 * dy;
-    int twoDyMinusDx = 2 * (dy - dx);
-    int x, y;
-
-
-    if(x1 > x2)
-    {
-        x = x2;
-        y = y2;
-        x2 = x1;
     }
     else
     {
-        x = x1;
-        y = y1;
-    }
-    Megapixel(slopeLessThanOne ? x : y, (slopeLessThanOne ? y : x) * ((!slopePositive) ? -1 : 1), {0, 1, 0});
-    while(x < x2)
-    {
-        x+=3;
-        if(p < 0)
-            p += twoDy;
+        bool slopeLessThanOne = fabs(slope) < 1;
+        bool slopePositive = slope > 0;
+
+        int x1 = (slopeLessThanOne ? pointA(0) : pointA(1)) * ((!slopeLessThanOne && !slopePositive) ? -1 : 1);
+        int y1 = (slopeLessThanOne ? pointA(1) : pointA(0)) * ((slopeLessThanOne && !slopePositive) ? -1 : 1);
+        int x2 = (slopeLessThanOne ? pointB(0) : pointB(1)) * ((!slopeLessThanOne && !slopePositive) ? -1 : 1);
+        int y2 = (slopeLessThanOne ? pointB(1) : pointB(0)) * ((slopeLessThanOne && !slopePositive) ? -1 : 1);
+        int dx = fabs(x2 - x1);
+        int dy = fabs(y2 - y1);
+        int p = 2 * dy - dx;
+        int twoDy = 2 * dy;
+        int twoDyMinusDx = 2 * (dy - dx);
+        int x, y;
+
+        int totalDist = fabs(x1 - x2);
+
+        if(x1 > x2)
+        {
+            x = x2;
+            y = y2;
+            x2 = x1;
+            Vector3f temp = colorA;
+            colorA = colorB;
+            colorB = temp;
+        }
         else
         {
-            y+=3;
-            p += twoDyMinusDx;
+            x = x1;
+            y = y1;
         }
-        Megapixel(slopeLessThanOne ? x : y, (slopeLessThanOne ? y : x) * ((!slopePositive) ? -1 : 1), {1, 0, 0});
+        Megapixel(slopeLessThanOne ? x : y, (slopeLessThanOne ? y : x) * ((!slopePositive) ? -1 : 1), linInt(colorA, colorB, 1/(totalDist)));
+        while(x < x2)
+        {
+            x+=3;
+            if(p < 0)
+                p += twoDy;
+            else
+            {
+                y+=3;
+                p += twoDyMinusDx;
+            }
+            Megapixel(slopeLessThanOne ? x : y, (slopeLessThanOne ? y : x) * ((!slopePositive) ? -1 : 1), linInt(colorA, colorB, (slopeLessThanOne ? x - x1 : y - y1)/(totalDist)));
+        }
     }
 }
 
