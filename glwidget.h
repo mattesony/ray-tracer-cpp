@@ -7,6 +7,8 @@
 #include <sstream>
 #include <string>
 #include "Polyhedron.h"
+#include "light.h"
+#include "material.h"
 #include <Eigen/Eigen>
 
 using namespace Eigen;
@@ -38,8 +40,20 @@ public:
         this->polyhedrons = polyhedrons;
     }
 
+    void setMaterials(std::vector<Material> materials)
+    {
+        this->materials = materials;
+    }
+    void setLight(Light light)
+    {
+        this->light = light;
+    }
+
 
     std::vector<Polyhedron> polyhedrons;
+    std::vector<Material> materials;
+    Light light;
+
     Vector3f pointA;
     Vector3f pointB;
     bool drawRotAxis = false;

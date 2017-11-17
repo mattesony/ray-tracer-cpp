@@ -3,8 +3,7 @@
 
 #include <glwidget.h>
 #include "Polyhedron.h"
-#include "light.h"
-#include "material.h"
+
 
 class GLWidgets
 {

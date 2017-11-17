@@ -111,6 +111,7 @@ GLWidget::paintGL(){
             Vector3f normal1 = ((vertex2 - vertex1).cwiseProduct(vertex3 - vertex1)).normalized();
             Vector3f normal2 = ((vertex3 - vertex2).cwiseProduct(vertex1 - vertex2)).normalized();
             Vector3f normal3 = ((vertex1 - vertex3).cwiseProduct(vertex2 - vertex3)).normalized();
+            Vector3f light = (this->light.X - vertex1).normalized();
             DrawBresenham({projectedPoints[triangle.v1].x*450, projectedPoints[triangle.v1].y*450}, {projectedPoints[triangle.v2].x*450, projectedPoints[triangle.v2].y*450}, normal1.cwiseAbs(), normal2.cwiseAbs());
             DrawBresenham({projectedPoints[triangle.v2].x*450, projectedPoints[triangle.v2].y*450}, {projectedPoints[triangle.v3].x*450, projectedPoints[triangle.v3].y*450}, normal2.cwiseAbs(), normal3.cwiseAbs());
             DrawBresenham({projectedPoints[triangle.v3].x*450, projectedPoints[triangle.v3].y*450}, {projectedPoints[triangle.v1].x*450, projectedPoints[triangle.v1].y*450}, normal3.cwiseAbs(), normal1.cwiseAbs());

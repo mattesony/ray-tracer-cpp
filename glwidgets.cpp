@@ -150,6 +150,14 @@ bool GLWidgets::OpenData(std::string filename, std::string matfilename, std::str
 
     lightfile.close();
 
+    this->openGLWidgetXY->setMaterials(this->materials);
+    this->openGLWidgetXZ->setMaterials(this->materials);
+    this->openGLWidgetYZ->setMaterials(this->materials);
+
+    this->openGLWidgetXY->setLight(this->light);
+    this->openGLWidgetXZ->setLight(this->light);
+    this->openGLWidgetYZ->setLight(this->light);
+
     return true;
 }
 
