@@ -28,6 +28,7 @@ public:
     void paintGL();
     Vector3f linInt(Vector3f colorA, Vector3f colorB, float t);
     void Megapixel(float x, float y, Vector3f color);
+    void DrawPixel(float x, float y, Vector3f color);
     void DrawBresenham(Vector2f pointA, Vector2f pointB, Vector3f colorA, Vector3f colorB);
     void drawLine(Vector3f pointA, Vector3f pointB);
     void teardownGL();

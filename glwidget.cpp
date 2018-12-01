@@ -180,6 +180,14 @@ void GLWidget::Megapixel(float x, float y, Vector3f color)
     glEnd();
 }
 
+void GLWidget::DrawPixel(float x, float y, Vector3f color)
+{
+    glBegin(GL_POINTS);
+    glColor3f(color(0), color(1), color(2));
+    glVertex2f(x, y);
+    glEnd();
+}
+
 Vector3f GLWidget::linInt(Vector3f colorA, Vector3f colorB, float t)
 {
     float r = colorA(0) + (colorB(0) - colorA(0)) * t;
@@ -199,30 +207,30 @@ void GLWidget::DrawBresenham(Vector2f pointA, Vector2f pointB, Vector3f colorA, 
     if(pointB(1) - pointA(1) == 0)
     {
         float xDist = max(pointB(0), pointA(0)) - min(pointB(0), pointA(0));
-        for(int j = 1; j < xDist; j+=3)
+        for(int j = 1; j < xDist; j++)
         {
             if (pointB(0) >= pointA(0))
             {
-                Megapixel(pointA(0) + j, pointA(1), linInt(colorA, colorB, j/xDist));
+                DrawPixel(pointA(0) + j, pointA(1), linInt(colorA, colorB, j/xDist));
             }
             else if (pointB(0) < pointA(0))
             {
-                Megapixel(pointB(0) + j, pointA(1), linInt(colorB, colorA, j/xDist));
+                DrawPixel(pointB(0) + j, pointA(1), linInt(colorB, colorA, j/xDist));
             }
         }
     }
     else if(pointB(0) - pointA(0) == 0)
     {
         float yDist = max(pointB(1), pointA(1)) - min(pointB(1), pointA(1));
-        for(int j = 1; j < yDist; j+=3)
+        for(int j = 1; j < yDist; j++)
         {
             if (pointB(1) >= pointA(1))
             {
-                Megapixel(pointA(0), pointA(1) + j, linInt(colorA, colorB, j/yDist));
+                DrawPixel(pointA(0), pointA(1) + j, linInt(colorA, colorB, j/yDist));
             }
             if (pointB(1) < pointA(1))
             {
-                Megapixel(pointA(0), pointB(1) + j, linInt(colorB, colorA, j/yDist));
+                DrawPixel(pointA(0), pointB(1) + j, linInt(colorB, colorA, j/yDist));
             }
 
         }
@@ -230,15 +238,15 @@ void GLWidget::DrawBresenham(Vector2f pointA, Vector2f pointB, Vector3f colorA, 
     else if(1 == abs(slope))
     {
         float xDist = max(pointB(0), pointA(0)) - min(pointB(0), pointA(0));
-        for(int j = 1; j < xDist; j+=3)
+        for(int j = 1; j < xDist; j++)
         {
             if (pointB(0) >= pointA(0))
             {
-                Megapixel(pointA(0) + j, (slope == 1) ? min(pointB(1), pointA(1)) + j : max(pointB(1), pointA(1)) - j, linInt(colorA, colorB, j/xDist));
+                DrawPixel(pointA(0) + j, (slope == 1) ? min(pointB(1), pointA(1)) + j : max(pointB(1), pointA(1)) - j, linInt(colorA, colorB, j/xDist));
             }
             else if (pointB(0) < pointA(0))
             {
-                Megapixel(pointB(0) + j, (slope == 1) ? min(pointB(1), pointA(1)) + j : max(pointB(1), pointA(1)) - j, linInt(colorB, colorA, j/xDist));
+                DrawPixel(pointB(0) + j, (slope == 1) ? min(pointB(1), pointA(1)) + j : max(pointB(1), pointA(1)) - j, linInt(colorB, colorA, j/xDist));
             }
         }
     }
@@ -274,18 +282,18 @@ void GLWidget::DrawBresenham(Vector2f pointA, Vector2f pointB, Vector3f colorA, 
             x = x1;
             y = y1;
         }
-        Megapixel(slopeLessThanOne ? x : y, (slopeLessThanOne ? y : x) * ((!slopePositive) ? -1 : 1), linInt(colorA, colorB, 1/((totalDist != 0) ? totalDist : 1)));
+        DrawPixel(slopeLessThanOne ? x : y, (slopeLessThanOne ? y : x) * ((!slopePositive) ? -1 : 1), linInt(colorA, colorB, 1/((totalDist != 0) ? totalDist : 1)));
         while(x < x2)
         {
-            x+=3;
+            x++;
             if(p < 0)
                 p += twoDy;
             else
             {
-                y+=3;
+                y++;
                 p += twoDyMinusDx;
             }
-            Megapixel(slopeLessThanOne ? x : y, (slopeLessThanOne ? y : x) * ((!slopePositive) ? -1 : 1), linInt(colorA, colorB, (slopeLessThanOne ? x - x1 : y - y1)/((totalDist != 0) ? totalDist : 1)));
+            DrawPixel(slopeLessThanOne ? x : y, (slopeLessThanOne ? y : x) * ((!slopePositive) ? -1 : 1), linInt(colorA, colorB, (slopeLessThanOne ? x - x1 : y - y1)/((totalDist != 0) ? totalDist : 1)));
         }
     }
 }
