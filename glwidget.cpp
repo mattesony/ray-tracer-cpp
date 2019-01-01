@@ -75,7 +75,6 @@ GLWidget::paintGL(){
     vector<Polyhedron> clippedPolyhedrons;
     if(this->clipping)
     {
-
         for(Polyhedron polyhedron : this->polyhedrons)
         {
             unsigned int pointsWithinCube = 0;
@@ -96,25 +95,38 @@ GLWidget::paintGL(){
         clippedPolyhedrons = this->polyhedrons;
     for(Polyhedron polyhedron : clippedPolyhedrons)
     {
-        vector<Point> projectedPoints = polyhedron.GetProjectedPoints(this->projection);
+        vector<Point> points = polyhedron.GetPoints();
         for(Triangle triangle : polyhedron.GetTriangles())
         {
-            Vector3f vertex1 = {projectedPoints[triangle.v1].x,
-                                projectedPoints[triangle.v1].y,
-                                projectedPoints[triangle.v1].z};
-            Vector3f vertex2 = {projectedPoints[triangle.v2].x,
-                                projectedPoints[triangle.v2].y,
-                                projectedPoints[triangle.v2].z};
-            Vector3f vertex3 = {projectedPoints[triangle.v3].x,
-                                projectedPoints[triangle.v3].y,
-                                projectedPoints[triangle.v3].z};
+            Vector3f vertex1 = {points[triangle.v1].x,
+                                points[triangle.v1].y,
+                                points[triangle.v1].z};
+            Vector3f vertex2 = {points[triangle.v2].x,
+                                points[triangle.v2].y,
+                                points[triangle.v2].z};
+            Vector3f vertex3 = {points[triangle.v3].x,
+                                points[triangle.v3].y,
+                                points[triangle.v3].z};
             Vector3f normal1 = ((vertex2 - vertex1).cwiseProduct(vertex3 - vertex1)).normalized();
             Vector3f normal2 = ((vertex3 - vertex2).cwiseProduct(vertex1 - vertex2)).normalized();
             Vector3f normal3 = ((vertex1 - vertex3).cwiseProduct(vertex2 - vertex3)).normalized();
-            Vector3f light = (this->light.X - vertex1).normalized();
-            DrawBresenham({projectedPoints[triangle.v1].x*450, projectedPoints[triangle.v1].y*450}, {projectedPoints[triangle.v2].x*450, projectedPoints[triangle.v2].y*450}, normal1.cwiseAbs(), normal2.cwiseAbs());
-            DrawBresenham({projectedPoints[triangle.v2].x*450, projectedPoints[triangle.v2].y*450}, {projectedPoints[triangle.v3].x*450, projectedPoints[triangle.v3].y*450}, normal2.cwiseAbs(), normal3.cwiseAbs());
-            DrawBresenham({projectedPoints[triangle.v3].x*450, projectedPoints[triangle.v3].y*450}, {projectedPoints[triangle.v1].x*450, projectedPoints[triangle.v1].y*450}, normal3.cwiseAbs(), normal1.cwiseAbs());
+            Vector3f light = this->light.X;
+            Vector3f light1 = (light - vertex1).normalized();
+            Vector3f light2 = (light - vertex2).normalized();
+            Vector3f light3 = (light - vertex3).normalized();
+            Vector3f f1 = vertex1 + Vector3f(0.5, 0.5, 1);
+            Vector3f f2 = vertex2 + Vector3f(0.5, 0.5, 1);
+            Vector3f f3 = vertex3 + Vector3f(0.5, 0.5, 1);
+            Vector3f Kd = this->materials[polyhedron.GetMaterial()].Kd;
+            Vector3f intens1 = this->light.Li/((f1-vertex1).norm() + this->light.K);
+            Vector3f diffuseColor1 = intens1.cwiseProduct(Kd*(light1.dot(normal1)));
+            Vector3f intens2 = this->light.Li/((f2-vertex2).norm() + this->light.K);
+            Vector3f diffuseColor2 = intens2.cwiseProduct(Kd*(light2.dot(normal2)));
+            Vector3f intens3 = this->light.Li/((f3-vertex3).norm() + this->light.K);
+            Vector3f diffuseColor3 = intens3.cwiseProduct(Kd*(light3.dot(normal3)));
+            DrawBresenham({points[triangle.v1].x*450, points[triangle.v1].y*450}, {points[triangle.v2].x*450, points[triangle.v2].y*450}, diffuseColor1, diffuseColor2);
+            DrawBresenham({points[triangle.v2].x*450, points[triangle.v2].y*450}, {points[triangle.v3].x*450, points[triangle.v3].y*450}, diffuseColor2, diffuseColor3);
+            DrawBresenham({points[triangle.v3].x*450, points[triangle.v3].y*450}, {points[triangle.v1].x*450, points[triangle.v1].y*450}, diffuseColor3, diffuseColor1);
         }
     }
 
