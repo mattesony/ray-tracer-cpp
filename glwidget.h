@@ -58,7 +58,7 @@ public:
     Vector3f pointA;
     Vector3f pointB;
     bool drawRotAxis = false;
-    bool clipping = true;
+    bool clipping = false;
 
 private:
      // Private Helpers

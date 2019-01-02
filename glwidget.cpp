@@ -107,10 +107,14 @@ GLWidget::paintGL(){
             Vector3f vertex3 = {points[triangle.v3].x,
                                 points[triangle.v3].y,
                                 points[triangle.v3].z};
-            Vector3f normal1 = ((vertex2 - vertex1).cwiseProduct(vertex3 - vertex1)).normalized();
-            Vector3f normal2 = ((vertex3 - vertex2).cwiseProduct(vertex1 - vertex2)).normalized();
-            Vector3f normal3 = ((vertex1 - vertex3).cwiseProduct(vertex2 - vertex3)).normalized();
+            Vector3f normal1 = ((vertex2 - vertex1).cross(vertex3 - vertex1)).normalized();
+            Vector3f normal2 = normal1;
+            Vector3f normal3 = normal1;
             Vector3f light = this->light.X;
+            glBegin(GL_POINTS);
+            glColor3f(1.0,0.0,0.0);
+            glVertex3f(light(0)*450, light(1)*450, 1);
+            glEnd();
             Vector3f light1 = (light - vertex1).normalized();
             Vector3f light2 = (light - vertex2).normalized();
             Vector3f light3 = (light - vertex3).normalized();

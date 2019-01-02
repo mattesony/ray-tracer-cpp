@@ -197,6 +197,6 @@ void GLWidgets::Repaint()
     this->openGLWidgetYZ->polyhedrons = this->polyhedrons;
 
     this->openGLWidgetXY->repaint();
-    this->openGLWidgetXZ->repaint();
-    this->openGLWidgetYZ->repaint();
+    //this->openGLWidgetXZ->repaint();
+    //this->openGLWidgetYZ->repaint();
 }
