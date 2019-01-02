@@ -35,6 +35,7 @@ public:
     void DrawPixel(float x, float y, Vector3f color);
     void DrawBresenham(Vector2f pointA, Vector2f pointB, Vector3f colorA, Vector3f colorB);
     void drawLine(Vector3f pointA, Vector3f pointB);
+    Vector3f phongLight(Polyhedron polyhedron, Vector3f vertex, Vector3f normal);
     void teardownGL();
     void setProjection(std::string proj)
     {

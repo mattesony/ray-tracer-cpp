@@ -106,33 +106,20 @@ GLWidget::paintGL(){
             Vector3f vertex3 = {points[triangle.v3].x,
                                 points[triangle.v3].y,
                                 points[triangle.v3].z};
-            Vector3f normal1 = ((vertex2 - vertex1).cross(vertex3 - vertex1)).normalized();
-            Vector3f normal2 = normal1;
-            Vector3f normal3 = normal1;
-            Vector3f light = this->light.X;
-            glPointSize(100.0*light(2));
+            Vector3f normal = ((vertex2 - vertex1).cross(vertex3 - vertex1)).normalized();
+            glPointSize(this->light.X(2) * sideLength/10);
             glBegin(GL_POINTS);
             auto lColor = this->light.Li;
             glColor4f(lColor(0),lColor(1),lColor(2), 0.1);
-            glVertex3f(light(0)*sideLength, light(1)*sideLength, 1);
+            glVertex3f(this->light.X(0)*sideLength, this->light.X(1)*sideLength, 1);
             glEnd();
             glPointSize(1.0);
-            Vector3f light1 = (light - vertex1).normalized();
-            Vector3f light2 = (light - vertex2).normalized();
-            Vector3f light3 = (light - vertex3).normalized();
-            Vector3f f1 = vertex1 + Vector3f(0.5, 0.5, 1);
-            Vector3f f2 = vertex2 + Vector3f(0.5, 0.5, 1);
-            Vector3f f3 = vertex3 + Vector3f(0.5, 0.5, 1);
-            Vector3f Kd = this->materials[polyhedron.GetMaterial()].Kd;
-            Vector3f intens1 = this->light.Li/((f1-vertex1).norm() + this->light.K);
-            Vector3f diffuseColor1 = intens1.cwiseProduct(Kd*(light1.dot(normal1)));
-            Vector3f intens2 = this->light.Li/((f2-vertex2).norm() + this->light.K);
-            Vector3f diffuseColor2 = intens2.cwiseProduct(Kd*(light2.dot(normal2)));
-            Vector3f intens3 = this->light.Li/((f3-vertex3).norm() + this->light.K);
-            Vector3f diffuseColor3 = intens3.cwiseProduct(Kd*(light3.dot(normal3)));
-            DrawBresenham({points[triangle.v1].x*sideLength, points[triangle.v1].y*sideLength}, {points[triangle.v2].x*sideLength, points[triangle.v2].y*sideLength}, diffuseColor1, diffuseColor2);
-            DrawBresenham({points[triangle.v2].x*sideLength, points[triangle.v2].y*sideLength}, {points[triangle.v3].x*sideLength, points[triangle.v3].y*sideLength}, diffuseColor2, diffuseColor3);
-            DrawBresenham({points[triangle.v3].x*sideLength, points[triangle.v3].y*sideLength}, {points[triangle.v1].x*sideLength, points[triangle.v1].y*sideLength}, diffuseColor3, diffuseColor1);
+            Vector3f color1 = phongLight(polyhedron, vertex1, normal);
+            Vector3f color2 = phongLight(polyhedron, vertex2, normal);
+            Vector3f color3 = phongLight(polyhedron, vertex3, normal);
+            DrawBresenham({points[triangle.v1].x*sideLength, points[triangle.v1].y*sideLength}, {points[triangle.v2].x*sideLength, points[triangle.v2].y*sideLength}, color1, color2);
+            DrawBresenham({points[triangle.v2].x*sideLength, points[triangle.v2].y*sideLength}, {points[triangle.v3].x*sideLength, points[triangle.v3].y*sideLength}, color2, color3);
+            DrawBresenham({points[triangle.v3].x*sideLength, points[triangle.v3].y*sideLength}, {points[triangle.v1].x*sideLength, points[triangle.v1].y*sideLength}, color3, color1);
         }
     }
 
@@ -146,6 +133,17 @@ GLWidget::paintGL(){
         drawRotAxis = false;
     }
     glEnd();
+}
+
+Vector3f GLWidget::phongLight(Polyhedron polyhedron, Vector3f vertex, Vector3f normal)
+{
+    Vector3f light = this->light.X;
+    Vector3f lightVector = (light - vertex).normalized();
+    Vector3f f = vertex + Vector3f(0.5, 0.5, 1);
+    Vector3f Kd = this->materials[polyhedron.GetMaterial()].Kd;
+    Vector3f intens = this->light.Li/((f-vertex).norm() + this->light.K);
+    Vector3f diffuseColor = intens.cwiseProduct(Kd*(lightVector.dot(normal)));
+    return diffuseColor;
 }
 
 bool GLWidget::OpenData(std::string filename, std::string matfilename, std::string lightfilename)
