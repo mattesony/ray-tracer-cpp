@@ -20,7 +20,7 @@ public:
 
 private:
     Ui::GLWindow *ui;
-    GLWidgets *glWidgets;
+    GLWidget *glWidget;
 };
 
 #endif // GLWINDOW_H

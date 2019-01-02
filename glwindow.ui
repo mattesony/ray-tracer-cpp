@@ -87,21 +87,8 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="1">
-           <widget class="GLWidget" name="openGLWidgetXZ"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="GLWidget" name="openGLWidgetYZ"/>
-          </item>
           <item row="0" column="0">
-           <widget class="GLWidget" name="openGLWidgetXY"/>
-          </item>
-          <item row="1" column="1" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-           <widget class="QLabel" name="labelAxes">
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt;&quot;&gt;XY, XZ&lt;br/&gt;YZ&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-           </widget>
+           <widget class="GLWidget" name="openGLWidget"/>
           </item>
          </layout>
         </widget>

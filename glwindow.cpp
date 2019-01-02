@@ -11,16 +11,16 @@ GLWindow::GLWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->groupBoxTransformations->setEnabled(false);
 
-    this->glWidgets =new GLWidgets(ui->openGLWidgetXY, ui->openGLWidgetXZ, ui->openGLWidgetYZ);
+    this->glWidget = ui->openGLWidget;
 
     QObject::connect(ui->buttonLoad, &QPushButton::clicked, [=]()
     {
-        if(!(this->glWidgets->OpenData((ui->lineEditFilename->text()).toUtf8().constData(),
+        if(!(this->glWidget->OpenData((ui->lineEditFilename->text()).toUtf8().constData(),
                                        (ui->lineEditMatFile->text()).toUtf8().constData(),
                                        (ui->lineEditLightFile->text()).toUtf8().constData())))
             QMessageBox::information(this, "Error", "Failed to load file, check your path." );
-        ui->spinObjectID->setMaximum(this->glWidgets->polyhedrons.size() - 1 * (this->glWidgets->polyhedrons.size() > 0));
-        if(this->glWidgets->polyhedrons.size() > 0)
+        ui->spinObjectID->setMaximum(this->glWidget->polyhedrons.size() - 1 * (this->glWidget->polyhedrons.size() > 0));
+        if(this->glWidget->polyhedrons.size() > 0)
         {
             ui->groupBoxTransformations->setEnabled(true);
             ui->buttonSave->setEnabled(true);
@@ -31,21 +31,21 @@ GLWindow::GLWindow(QWidget *parent) :
     });
     QObject::connect(ui->buttonSave, &QPushButton::clicked, [=]()
     {
-        this->glWidgets->SaveData((ui->lineEditFilename->text()).toUtf8().constData());
+        this->glWidget->SaveData((ui->lineEditFilename->text()).toUtf8().constData());
     });
     QObject::connect(ui->checkClipping, &QPushButton::clicked, [=](bool checked)
     {
-        this->glWidgets->SetClipping((checked) ? true : false);
+        this->glWidget->clipping = (checked) ? true : false;
         Repaint();
     });
     QObject::connect(ui->buttonTransl, &QPushButton::clicked, [=]()
     {
-        this->glWidgets->polyhedrons[ui->spinObjectID->value()].Translate(ui->spinTranslDx->value(), ui->spinTranslDy->value(), ui->spinTranslDz->value());
+        this->glWidget->polyhedrons[ui->spinObjectID->value()].Translate(ui->spinTranslDx->value(), ui->spinTranslDy->value(), ui->spinTranslDz->value());
         Repaint();
     });
     QObject::connect(ui->buttonScale, &QPushButton::clicked, [=]()
     {
-        this->glWidgets->polyhedrons[ui->spinObjectID->value()].CentroidScale(ui->spinScaleA->value(), ui->spinScaleB->value(), ui->spinScaleG->value());
+        this->glWidget->polyhedrons[ui->spinObjectID->value()].CentroidScale(ui->spinScaleA->value(), ui->spinScaleB->value(), ui->spinScaleG->value());
         Repaint();
     });
     QObject::connect(ui->buttonRot, &QPushButton::clicked, [=]()
@@ -61,27 +61,18 @@ GLWindow::GLWindow(QWidget *parent) :
             pointB = {x, y, z};
         else
             std::cout << "Failed to read point " << ui->lineRotPb->text().toStdString() << ": must be formatted like \"0.32 0.0 0.45\"" << std::endl;
-        this->glWidgets->polyhedrons[ui->spinObjectID->value()].RotateAroundAxis(ui->spinRotA->value(), pointA, pointB);
+        this->glWidget->polyhedrons[ui->spinObjectID->value()].RotateAroundAxis(ui->spinRotA->value(), pointA, pointB);
 
-        ui->openGLWidgetXY->pointA = Polyhedron::ProjectPoint("AxoXY", pointA);
-        ui->openGLWidgetXY->pointB = Polyhedron::ProjectPoint("AxoXY", pointB);
-        ui->openGLWidgetXY->drawRotAxis = true;
-
-        ui->openGLWidgetXZ->pointA = Polyhedron::ProjectPoint("AxoXZ", pointA);
-        ui->openGLWidgetXZ->pointB = Polyhedron::ProjectPoint("AxoXZ", pointB);
-        ui->openGLWidgetXZ->drawRotAxis = true;
-
-        ui->openGLWidgetYZ->pointA = Polyhedron::ProjectPoint("AxoYZ", pointA);
-        ui->openGLWidgetYZ->pointB = Polyhedron::ProjectPoint("AxoYZ", pointB);
-        ui->openGLWidgetYZ->drawRotAxis = true;
-
+        ui->openGLWidget->pointA = Polyhedron::ProjectPoint("AxoXY", pointA);
+        ui->openGLWidget->pointB = Polyhedron::ProjectPoint("AxoXY", pointB);
+        ui->openGLWidget->drawRotAxis = true;
         Repaint();
     });
 }
 
 void GLWindow::Repaint()
 {
-    this->glWidgets->Repaint();
+    this->glWidget->repaint();
 }
 
 GLWindow::~GLWindow()
