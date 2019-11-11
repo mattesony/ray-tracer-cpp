@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
-#include "glwidgets.h"
+#include "glwidget.h"
 
 namespace Ui {
 class GLWindow;

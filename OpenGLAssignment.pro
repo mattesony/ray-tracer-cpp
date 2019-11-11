@@ -29,8 +29,7 @@ SOURCES += \
         main.cpp \
         glwindow.cpp \
     glwidget.cpp \
-    Polyhedron.cpp \
-    glwidgets.cpp
+    Polyhedron.cpp
 
 HEADERS += \
         glwindow.h \
@@ -38,7 +37,6 @@ HEADERS += \
     Point.h \
     Polyhedron.h \
     Edge.h \
-    glwidgets.h \
     material.h \
     light.h \
     Triangle.h

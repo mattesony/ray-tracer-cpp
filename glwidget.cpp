@@ -1,6 +1,8 @@
 #include "glwidget.h"
 #include <QDebug>
 #include <Eigen/Eigen>
+#include <array>
+#include <algorithm>
 
 using namespace Eigen;
 
@@ -107,21 +109,69 @@ GLWidget::paintGL(){
                                 points[triangle.v3].y,
                                 points[triangle.v3].z};
             Vector3f normal = ((vertex2 - vertex1).cross(vertex3 - vertex1)).normalized();
-            glPointSize(this->light.X(2) * sideLength/10);
-            glBegin(GL_POINTS);
-            auto lColor = this->light.Li;
-            glColor4f(lColor(0),lColor(1),lColor(2), 0.1);
-            glVertex3f(this->light.X(0)*sideLength, this->light.X(1)*sideLength, 1);
-            glEnd();
-            glPointSize(1.0);
             Vector3f color1 = phongLight(polyhedron, vertex1, normal);
             Vector3f color2 = phongLight(polyhedron, vertex2, normal);
             Vector3f color3 = phongLight(polyhedron, vertex3, normal);
+            std::array<Vector3f, 3> vertices;
+            vertices[0] = vertex1;
+            vertices[1] = vertex2;
+            vertices[2] = vertex3;
+            /*
+            // sorts y descending, x ascending, z descending
+            std::sort(vertices.begin(), vertices.end(),
+                      [](const Vector3f a, const Vector3f b)
+                        {
+                            if (a(1) == b(1))
+                            {
+                                if(a(0) == b(0)) return a(2) > b(2);
+                                else return a(0) < b(0);
+                            }
+                            else return a(1) > b(1);
+                        });
+            */
+            /*
+            // sorts x ascending, y descending, z descending
+            std::sort(vertices.begin(), vertices.end(),
+                      [](const Vector3f a, const Vector3f b)
+                        {
+                            if (a(0) == b(0))
+                            {
+                                if(a(1) == b(1)) return a(2) > b(2);
+                                else return a(1) > b(1);
+                            }
+                            else return a(0) < b(0);
+                        });
+            */
+            //sorts y descending, x ascending, z descending
+            std::sort(vertices.begin(), vertices.end(),
+                      [](const Vector3f a, const Vector3f b)
+                        {
+                            return a(2) > b(2);
+                        });
+            std::sort(vertices.begin(), vertices.end(),
+                      [](const Vector3f a, const Vector3f b)
+                        {
+                            return a(0) < b(0);
+                        });
+            std::sort(vertices.begin(), vertices.end(),
+                      [](const Vector3f a, const Vector3f b)
+                        {
+                            return a(1) > b(1);
+                        });
             DrawBresenham({points[triangle.v1].x*sideLength, points[triangle.v1].y*sideLength}, {points[triangle.v2].x*sideLength, points[triangle.v2].y*sideLength}, color1, color2);
             DrawBresenham({points[triangle.v2].x*sideLength, points[triangle.v2].y*sideLength}, {points[triangle.v3].x*sideLength, points[triangle.v3].y*sideLength}, color2, color3);
             DrawBresenham({points[triangle.v3].x*sideLength, points[triangle.v3].y*sideLength}, {points[triangle.v1].x*sideLength, points[triangle.v1].y*sideLength}, color3, color1);
         }
     }
+
+    //Draw light source
+    glPointSize(this->light.X(2) * sideLength/10);
+    glBegin(GL_POINTS);
+    auto lColor = this->light.Li;
+    glColor4f(lColor(0),lColor(1),lColor(2), 0.1);
+    glVertex3f(this->light.X(0)*sideLength, this->light.X(1)*sideLength, 1);
+    glEnd();
+    glPointSize(1.0);
 
     //tells opengl to interperate every two calls to glVertex as a line
     glBegin(GL_LINES);
