@@ -96,7 +96,7 @@ void Polyhedron::Transform(Matrix4f Mtransform)
     {
         Vector4f p = {point.x, point.y, point.z, 1};
         Vector4f pBar = Mtransform * p;
-        point = {pBar(0), pBar(1), pBar(2)};
+        point = Point({pBar(0), pBar(1), pBar(2)});
     }
 }
 

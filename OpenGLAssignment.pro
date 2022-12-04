@@ -32,6 +32,8 @@ SOURCES += \
     Polyhedron.cpp
 
 HEADERS += \
+    Tuple.h \
+    Vector.h \
         glwindow.h \
     glwidget.h \
     Point.h \
