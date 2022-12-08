@@ -88,7 +88,20 @@
          </property>
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
-           <widget class="GLWidget" name="openGLWidget"/>
+           <widget class="GLWidget" name="openGLWidget">
+            <property name="minimumSize">
+             <size>
+              <width>1000</width>
+              <height>1000</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>1000</width>
+              <height>1000</height>
+             </size>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

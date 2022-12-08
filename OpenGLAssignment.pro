@@ -26,6 +26,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    canvas.cpp \
         main.cpp \
         glwindow.cpp \
     glwidget.cpp \
@@ -34,6 +35,7 @@ SOURCES += \
 HEADERS += \
     Tuple.h \
     Vector.h \
+    canvas.h \
         glwindow.h \
     glwidget.h \
     Point.h \

@@ -4,7 +4,7 @@
 #include <array>
 #include <algorithm>
 #include "Vector.h"
-#include <algorithm>
+#include "canvas.h"
 
 using namespace Eigen;
 
@@ -77,15 +77,22 @@ GLWidget::paintGL(){
 
     glBegin(GL_POINTS);
     glColor4f(1,0,0, 0.1);
+    Canvas canvas = Canvas(width, height);
     Point position = {0, 0.5, 0};
     Vector velocity = Vector({.01, .01, 0});
     Vector env = Vector({-0.0001, -0.00025, 0});
     for(int tick = 0; tick < sideLength; tick++)
     {
         glVertex3f(position.x*sideLength, position.y*sideLength, 1);
+        canvas.writePixel(floor(position.x*sideLength), floor(position.y*sideLength), Vector3f(1,0,0));
         position = position + velocity;
         velocity = velocity + env;
     }
+    canvas.writePixel(999, 999, Vector3f(0,1,0));
+    canvas.writePixel(0, 999, Vector3f(1,0,0));
+    canvas.writePixel(999, 0, Vector3f(0,1,1));
+    canvas.writePixel(0, 0, Vector3f(1,1,1));
+    canvas.writeFile();
     glEnd();
 }
 
