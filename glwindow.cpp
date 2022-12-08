@@ -1,4 +1,6 @@
 #include "glwindow.h"
+#include "Vector.h"
+#include "canvas.h"
 #include "ui_glwindow.h"
 #include <Eigen/Eigen>
 
@@ -10,8 +12,7 @@ GLWindow::GLWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->groupBoxTransformations->setEnabled(false);
-
-    this->glWidget = ui->openGLWidget;
+    this->canvas = new Canvas(PPM_WIDTH, PPM_HEIGHT);
 
     QObject::connect(ui->buttonLoad, &QPushButton::clicked, [=]()
     {
@@ -63,16 +64,36 @@ GLWindow::GLWindow(QWidget *parent) :
             std::cout << "Failed to read point " << ui->lineRotPb->text().toStdString() << ": must be formatted like \"0.32 0.0 0.45\"" << std::endl;
         this->glWidget->polyhedrons[ui->spinObjectID->value()].RotateAroundAxis(ui->spinRotA->value(), pointA, pointB);
 
-        ui->openGLWidget->pointA = Polyhedron::ProjectPoint("AxoXY", pointA);
-        ui->openGLWidget->pointB = Polyhedron::ProjectPoint("AxoXY", pointB);
-        ui->openGLWidget->drawRotAxis = true;
+        this->glWidget->pointA = Polyhedron::ProjectPoint("AxoXY", pointA);
+        this->glWidget->pointB = Polyhedron::ProjectPoint("AxoXY", pointB);
+        this->glWidget->drawRotAxis = true;
         Repaint();
     });
+    QObject::connect(ui->buttonSavePPM, &QPushButton::clicked, [=]()
+    {
+        this->canvas->writeFile(ui->lineEditPPMName->text().toUtf8().constData());
+    });
+
+    Repaint();
 }
 
 void GLWindow::Repaint()
 {
-    this->glWidget->repaint();
+    Point position = {0, 0.5, 0};
+    Vector velocity = Vector({.01, .01, 0});
+    Vector env = Vector({-0.0001, -0.00025, 0});
+    for(int tick = 0; tick < PPM_WIDTH; tick++)
+    {
+        this->canvas->writePixel(floor(position.x*PPM_WIDTH), floor(position.y*PPM_HEIGHT), Vector3f(1,0,0));
+        position = position + velocity;
+        velocity = velocity + env;
+    }
+    this->canvas->writePixel(PPM_WIDTH-1, PPM_HEIGHT-1, Vector3f(0,1,0));
+    this->canvas->writePixel(0, PPM_HEIGHT-1, Vector3f(1,0,0));
+    this->canvas->writePixel(PPM_WIDTH-1, 0, Vector3f(0,1,1));
+    this->canvas->writePixel(0, 0, Vector3f(1,1,1));
+    image.loadFromData(this->canvas->getPPM().c_str());
+    ui->imageOutput->setPixmap(image);
 }
 
 GLWindow::~GLWindow()
