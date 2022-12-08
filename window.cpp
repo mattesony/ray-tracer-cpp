@@ -1,7 +1,7 @@
 #include "window.h"
 #include "ui_window.h"
-#include "Point.h"
-#include "Vector.h"
+#include "point.h"
+#include "vector.h"
 #include <Eigen/Eigen>
 
 using namespace Eigen;
@@ -38,6 +38,7 @@ void Window::Repaint()
     this->canvas->writePixel(0, 0, Vector3f(1,1,1));
     image.loadFromData(this->canvas->getPPM().c_str());
     ui->imageOutput->setPixmap(image);
+    // TODO: lock aspect ratio
 }
 
 Window::~Window()

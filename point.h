@@ -2,7 +2,7 @@
 #define POINT_H
 
 #include <Eigen/Eigen>
-#include "Tuple.h"
+#include "tuple.h"
 using namespace Eigen;
 
 struct Point : Tuple

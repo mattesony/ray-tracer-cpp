@@ -2,7 +2,7 @@
 #define VECTOR_H
 
 #include <Eigen/Eigen>
-#include "Tuple.h"
+#include "tuple.h"
 using namespace Eigen;
 
 struct Vector : Tuple

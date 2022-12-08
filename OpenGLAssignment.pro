@@ -28,19 +28,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     canvas.cpp \
         main.cpp \
-    Polyhedron.cpp \
     window.cpp
 
 HEADERS += \
-    Tuple.h \
-    Vector.h \
     canvas.h \
-    Point.h \
-    Polyhedron.h \
-    Edge.h \
-    material.h \
-    light.h \
-    Triangle.h \
+    point.h \
+    tuple.h \
+    vector.h \
     window.h
 
 FORMS += \

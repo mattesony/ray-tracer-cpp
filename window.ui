@@ -58,10 +58,28 @@
        </item>
        <item>
         <widget class="QFrame" name="frame_4">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
-           <width>926</width>
-           <height>926</height>
+           <width>1000</width>
+           <height>1000</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>1250</width>
+           <height>1250</height>
           </size>
          </property>
          <property name="frameShape">
@@ -73,11 +91,20 @@
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="2">
            <widget class="QLabel" name="imageOutput">
+            <property name="sizeIncrement">
+             <size>
+              <width>1</width>
+              <height>1</height>
+             </size>
+            </property>
             <property name="text">
              <string/>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
