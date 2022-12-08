@@ -1,67 +1,61 @@
-#ifndef VECTOR_H
-#define VECTOR_H
+#ifndef VECTOR_H_
+#define VECTOR_H_
 
 #include <Eigen/Eigen>
-#include "tuple.h"
-using namespace Eigen;
 
-struct Vector : Tuple
-{
-    Vector(std::initializer_list<float> list)
-    {
-        assert(list.size() == 3);
-        auto iter = list.begin();
-        x = *iter++;
-        y = *iter++;
-        z = *iter;
-    }
+#include "./tuple.h"
+using Eigen::Vector3f;
+using Eigen::Vector4f;
 
-    Vector fromVector(Vector3f vector)
-    {
-        Vector p = {vector(0), vector(1), vector(2)};
-        return p;
-    }
+struct Vector : Tuple {
+  Vector(std::initializer_list<float> list) {
+    assert(list.size() == 3);
+    auto iter = list.begin();
+    x = *iter++;
+    y = *iter++;
+    z = *iter;
+  }
 
-    Vector fromVector(Vector4f vector)
-    {
-        Vector p = {vector(0), vector(1), vector(2)};
-        return p;
-    }
+  explicit Vector(Tuple tuple) {
+    x = tuple.x;
+    y = tuple.y;
+    z = tuple.z;
+  }
 
-    void operator=(Tuple tuple)
-    {
-        x = tuple.x;
-        y = tuple.y;
-        z = tuple.z;
-    }
+  Vector fromVector(Vector3f vector) {
+    Vector p = {vector(0), vector(1), vector(2)};
+    return p;
+  }
 
-    Vector4f get4f()
-    {
-        Vector4f v;
-        v << x, y, z, 0;
-        return v;
-    }
+  Vector fromVector(Vector4f vector) {
+    Vector p = {vector(0), vector(1), vector(2)};
+    return p;
+  }
 
-    float getMagnitude()
-    {
-        Vector3f v = get3f();
-        return v.norm();
-    }
+  void operator=(Tuple tuple) {
+    x = tuple.x;
+    y = tuple.y;
+    z = tuple.z;
+  }
 
-    Vector getNormalized()
-    {
-        Vector3f v = get3f();
-        return fromVector(v.normalized());
-    }
+  Vector4f get4f() {
+    Vector4f v;
+    v << x, y, z, 0;
+    return v;
+  }
 
-    float dot(Vector &b)
-    {
-       return get3f().dot(b.get3f());
-    }
+  float getMagnitude() {
+    Vector3f v = get3f();
+    return v.norm();
+  }
 
-    Vector cross(Vector &b)
-    {
-       return fromVector(get3f().cross(b.get3f()));
-    }
+  Vector getNormalized() {
+    Vector3f v = get3f();
+    return fromVector(v.normalized());
+  }
+
+  float dot(Vector *b) { return get3f().dot(b->get3f()); }
+
+  Vector cross(Vector *b) { return fromVector(get3f().cross(b->get3f())); }
 };
-#endif //VECTOR_H
+#endif  // VECTOR_H_

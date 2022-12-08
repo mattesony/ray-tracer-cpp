@@ -1,0 +1,13 @@
+fail_fast: false
+repos:
+  - repo: https://github.com/pocc/pre-commit-hooks
+    rev: v1.3.5
+    hooks:
+      - id: clang-format
+        exclude: ^Eigen
+        args: [--style=Google,-i]
+      - id: cppcheck
+        exclude: ^Eigen
+        args: [--force,--suppress=noValidConfiguration,--suppress=preprocessorErrorDirective,--suppress=missingIncludeSystem]
+      - id: cpplint
+        exclude: ^Eigen

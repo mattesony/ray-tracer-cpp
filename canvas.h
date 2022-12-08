@@ -1,22 +1,21 @@
-#ifndef CANVAS_H
-#define CANVAS_H
-
+#ifndef CANVAS_H_
+#define CANVAS_H_
 
 #include <Eigen/Eigen>
-#include <array>
+#include <string>
+#include <vector>
 
-using namespace Eigen;
+using Eigen::Vector3f;
+class Canvas {
+ public:
+  Canvas(int width, int height);
+  bool writePixel(int x, int y, Vector3f color);
+  std::string getPPM();
+  void writeFile(std::string name = "test.ppm");
 
-class Canvas
-{
-public:
-    Canvas(int width, int height);
-    bool writePixel(int x, int y, Vector3f color);
-    std::string getPPM();
-    void writeFile(std::string name="test.ppm");
-private:
-    int width, height, size;
-    std::vector<Vector3f> pixelArray;
+ private:
+  int width, height, size;
+  std::vector<Vector3f> pixelArray;
 };
 
-#endif // CANVAS_H
+#endif  // CANVAS_H_

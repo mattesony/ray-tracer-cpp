@@ -1,41 +1,38 @@
-#ifndef POINT_H
-#define POINT_H
+#ifndef POINT_H_
+#define POINT_H_
 
 #include <Eigen/Eigen>
-#include "tuple.h"
-using namespace Eigen;
 
-struct Point : Tuple
-{
-    Point(std::initializer_list<float> list)
-    {
-        assert(list.size() == 3);
-        auto iter = list.begin();
-        x = *iter++;
-        y = *iter++;
-        z = *iter;
-    }
+#include "./tuple.h"
 
-    Point(Tuple tuple)
-    {
-        x = tuple.x;
-        y = tuple.y;
-        z = tuple.z;
-    }
+using Eigen::Vector4f;
 
-    void operator=(Tuple tuple)
-    {
-        x = tuple.x;
-        y = tuple.y;
-        z = tuple.z;
-    }
+struct Point : Tuple {
+  Point(std::initializer_list<float> list) {
+    assert(list.size() == 3);
+    auto iter = list.begin();
+    x = *iter++;
+    y = *iter++;
+    z = *iter;
+  }
 
-    Vector4f get4f()
-    {
-        Vector4f v;
-        v << x, y, z, 1;
-        return v;
-    }
+  explicit Point(Tuple tuple) {
+    x = tuple.x;
+    y = tuple.y;
+    z = tuple.z;
+  }
+
+  void operator=(Tuple tuple) {
+    x = tuple.x;
+    y = tuple.y;
+    z = tuple.z;
+  }
+
+  Vector4f get4f() {
+    Vector4f v;
+    v << x, y, z, 1;
+    return v;
+  }
 };
 
-#endif //POINT_H
+#endif  // POINT_H_
