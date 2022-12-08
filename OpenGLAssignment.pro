@@ -28,22 +28,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     canvas.cpp \
         main.cpp \
-        glwindow.cpp \
-    glwidget.cpp \
-    Polyhedron.cpp
+    Polyhedron.cpp \
+    window.cpp
 
 HEADERS += \
     Tuple.h \
     Vector.h \
     canvas.h \
-        glwindow.h \
-    glwidget.h \
     Point.h \
     Polyhedron.h \
     Edge.h \
     material.h \
     light.h \
-    Triangle.h
+    Triangle.h \
+    window.h
 
 FORMS += \
-        glwindow.ui
+    window.ui
