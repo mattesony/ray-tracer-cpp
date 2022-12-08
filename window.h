@@ -20,8 +20,8 @@ public:
     ~Window();
 
 private:
-    int PPM_WIDTH = 200;
-    int PPM_HEIGHT = 200;
+    int PPM_WIDTH = 900;
+    int PPM_HEIGHT = 550;
     Ui::Window *ui;
     QPixmap image;
     Canvas *canvas;

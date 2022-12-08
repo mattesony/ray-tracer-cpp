@@ -23,12 +23,12 @@ Window::Window(QWidget *parent) :
 
 void Window::Repaint()
 {
-    Point position = {0, 0.5, 0};
-    Vector velocity = Vector({.01, .01, 0});
-    Vector env = Vector({-0.0001, -0.00025, 0});
+    Vector3f position = {0, 0, 0};
+    Vector3f velocity = Vector3f({1, 1.8, 0}).normalized()*11.25;
+    Vector3f env = Vector3f({-0.01, -0.1, 0});
     for(int tick = 0; tick < PPM_WIDTH; tick++)
     {
-        this->canvas->writePixel(floor(position.x*PPM_WIDTH), floor(position.y*PPM_HEIGHT), Vector3f(1,0,0));
+        this->canvas->writePixel(round(position(0)), round(position(1)), Vector3f(1,0,0));
         position = position + velocity;
         velocity = velocity + env;
     }
@@ -37,7 +37,7 @@ void Window::Repaint()
     this->canvas->writePixel(PPM_WIDTH-1, 0, Vector3f(0,1,1));
     this->canvas->writePixel(0, 0, Vector3f(1,1,1));
     image.loadFromData(this->canvas->getPPM().c_str());
-    ui->imageOutput->setPixmap(image);
+    ui->labelImage->setPixmap(image);
     // TODO: lock aspect ratio
 }
 
