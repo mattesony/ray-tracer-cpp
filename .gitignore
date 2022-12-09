@@ -1,1 +1,4 @@
 OpenGLAssignment.pro.user
+qbuild/*
+build/*
+conanbuildinfo.pri

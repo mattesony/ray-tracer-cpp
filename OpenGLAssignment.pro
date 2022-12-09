@@ -26,16 +26,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-    canvas.cpp \
-        main.cpp \
-    window.cpp
+        src/main.cpp \
+        src/window.cpp \
+        src/canvas.cpp
 
 HEADERS += \
-    canvas.h \
-    point.h \
-    tuple.h \
-    vector.h \
-    window.h
+    src/point.h \
+    src/tuple.h \
+    src/vector.h \
+    src/window.h \
+    src/canvas.h
 
 FORMS += \
-    window.ui
+    src/window.ui
+
+CONFIG += conan_basic_setup
+ include(conanbuildinfo.pri)

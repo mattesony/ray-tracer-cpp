@@ -1,0 +1,6 @@
+[requires]
+eigen/3.4.0
+gtest/1.8.1 
+
+[generators]
+cmake_find_package
