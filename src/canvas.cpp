@@ -18,22 +18,22 @@ Canvas::Canvas(int width, int height) {
 }
 bool Canvas::writePixel(int x, int y, Vector3f color) {
   if ((0 <= x && x < this->width) && (0 <= y && y < this->height)) {
-    this->pixelArray[(this->height - 1 - y) * this->width + x] = color;
+    this->pixelArray[y * this->width + x] = color;
     return true;
   }
   // TODO: log here
   return false;
 }
 
-int floorAndClamp(int val) {
+int roundAndClamp(float val) {
   // TODO: Add logging here to make clamping obvious
   if (0 > val) {
     return 0;
   } else if (MAX_COLOR_VALUE < val) {
     return MAX_COLOR_VALUE;
   } else {
-    // round down to integer
-    return floor(val);
+    // round to integer
+    return round(val);
   }
 }
 
@@ -51,13 +51,13 @@ std::string Canvas::getPPM() {
       Vector3f pixel = this->pixelArray[row * this->width + column];
       for (int colorIndex = 0; colorIndex < 3; colorIndex++) {
         std::string intStr =
-            std::to_string(floorAndClamp(pixel(colorIndex) * MAX_COLOR_VALUE));
+            std::to_string(roundAndClamp(pixel(colorIndex) * MAX_COLOR_VALUE));
         if (70 < lineLen + static_cast<int>(0 != lineLen) + intStr.length()) {
           output << std::endl;
           lineLen = 0;
         }
-        lineLen += static_cast<int>(0 != lineLen) + intStr.length();
         if (0 != lineLen) output << " ";
+        lineLen += static_cast<int>(0 != lineLen) + intStr.length();
         output << intStr;
       }
     }

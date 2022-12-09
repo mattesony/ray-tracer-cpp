@@ -22,7 +22,7 @@ void Window::Repaint() {
   Vector3f velocity = Vector3f({1, 1.8, 0}).normalized() * 11.25;
   Vector3f env = Vector3f({-0.01, -0.1, 0});
   for (int tick = 0; tick < PPM_WIDTH; tick++) {
-    this->canvas->writePixel(round(position(0)), round(position(1)),
+    this->canvas->writePixel(position(0), PPM_HEIGHT - 1 - position(1),
                              Vector3f(1, 0, 0));
     position = position + velocity;
     velocity = velocity + env;
