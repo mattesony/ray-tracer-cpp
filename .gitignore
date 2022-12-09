@@ -1,4 +1,5 @@
-OpenGLAssignment.pro.user
+RayTracer.pro.user
 qbuild/*
 build/*
 conanbuildinfo.pri
+.qtc_clangd/*

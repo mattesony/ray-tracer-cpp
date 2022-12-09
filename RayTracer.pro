@@ -8,7 +8,7 @@ lessThan(QT_MAJOR_VERSION, 5): error("Requires Qt5- run with Qt5's qmake (/usr/l
 
 QT       += core gui widgets
 
-TARGET = OpenGLAssignment
+TARGET = RayTracer
 TEMPLATE = app
 
 QMAKE_CXXFLAGS += -std=c++11
@@ -41,4 +41,4 @@ FORMS += \
     src/window.ui
 
 CONFIG += conan_basic_setup
- include(conanbuildinfo.pri)
+ include(build/conanbuildinfo.pri)
