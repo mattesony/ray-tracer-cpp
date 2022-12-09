@@ -1,6 +1,9 @@
 [requires]
 eigen/3.4.0
-gtest/1.8.1 
+gtest/1.8.1
+# disabled because conan package seems to be missing dependencies that have to be installed manually   
+# qt/5.15.7 
 
 [generators]
 cmake_find_package
+qmake
