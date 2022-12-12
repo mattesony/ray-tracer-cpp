@@ -36,11 +36,14 @@ TEST(CanvasTest, ConstructingPPMPixelData) {
 TEST(CanvasTest, SplittingLongLinesPPM) {
   Canvas canvas = Canvas(10, 2);
 
-  Vector3f c1 = {1.5, 0, 0};
-  Vector3f c2 = {0, 0.5, 0};
-  Vector3f c3 = {-0.5, 0, 1};
+  Vector3f color = {1, 0.8, 0.6};
 
   // every pixel of c is set to color(1, 0.8, 0.6)
+  for (int x = 0; x < 10; x++) {
+    for (int y = 0; y < 2; y++) {
+      canvas.writePixel(x, y, color);
+    }
+  }
 
   std::string ppm = canvas.getPPM();
 
@@ -51,6 +54,14 @@ TEST(CanvasTest, SplittingLongLinesPPM) {
                     "255 204 153 255 204 153 255 204 153 255 204 153 255 204 "
                     "153 255 204\n"
                     "153 255 204 153 255 204 153 255 204 153 255 204 153\n"));
+}
+
+TEST(CanvasTest, PPMEndsWithNewline) {
+  Canvas canvas = Canvas(5, 3);
+
+  std::string ppm = canvas.getPPM();
+
+  ASSERT_THAT(ppm, EndsWith("\n"));
 }
 
 int main(int argc, char** argv) {

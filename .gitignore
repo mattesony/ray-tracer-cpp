@@ -3,3 +3,4 @@ qbuild/*
 build/*
 conanbuildinfo.pri
 .qtc_clangd/*
+compile_commands.json

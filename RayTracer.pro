@@ -41,4 +41,4 @@ FORMS += \
     src/window.ui
 
 CONFIG += conan_basic_setup
- include(build/conanbuildinfo.pri)
+ include(./build/conanbuildinfo.pri)
