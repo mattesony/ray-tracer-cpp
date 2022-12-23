@@ -5,7 +5,10 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+find_package(Eigen3 REQUIRED)
+
 enable_testing()
 
 add_subdirectory(src)
 add_subdirectory(tests)
+

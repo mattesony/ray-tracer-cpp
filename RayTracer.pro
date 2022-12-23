@@ -27,11 +27,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         src/main.cpp \
+        src/transformations.cpp \
+        src/tuple.cpp \
         src/window.cpp \
         src/canvas.cpp
 
 HEADERS += \
     src/point.h \
+    src/transformations.h \
     src/tuple.h \
     src/vector.h \
     src/window.h \

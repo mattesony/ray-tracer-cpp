@@ -46,4 +46,9 @@ struct Tuple {
   }
 };
 
+Vector4f point(float x, float y, float z);
+bool isPoint(Vector4f tuple);
+Vector4f vector(float x, float y, float z);
+bool isVector(Vector4f tuple);
+
 #endif  // TUPLE_H_
