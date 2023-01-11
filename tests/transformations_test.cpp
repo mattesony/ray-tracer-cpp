@@ -166,59 +166,79 @@ TEST(TransformationsTest, ShearZtoY) {
   EXPECT_EQ(transform * p, point(2, 3, 7));
 }
 
-/*
-Scenario: Individual transformations are applied in sequence
-  Given p ← point(1, 0, 1)
-    And A ← rotation_x(π / 2)
-    And B ← scaling(5, 5, 5)
-    And C ← translation(10, 5, 7)
-  # apply rotation first
-  When p2 ← A * p
-  Then p2 = point(1, -1, 0)
-  # then apply scaling
-  When p3 ← B * p2
-  Then p3 = point(5, -5, 0)
-  # then apply translation
-  When p4 ← C * p3
-  Then p4 = point(15, 0, 7)
+TEST(TransformationsTest, Sequence) {
+  /*
+  Scenario: Individual transformations are applied in sequence
+  */
+  Vector4f p = point(1, 0, 1);
+  Matrix4f A = rotation_x(M_PI / 2);
+  Matrix4f B = scaling(5, 5, 5);
+  Matrix4f C = translation(10, 5, 7);
+  Vector4f p2 = A * p;
+  EXPECT_EQ(p2, point(1, -1, 0));
+  Vector4f p3 = B * p2;
+  EXPECT_EQ(p3, point(5, -5, 0));
+  Vector4f p4 = C * p3;
+  EXPECT_EQ(p4, point(15, 0, 7));
+}
 
-Scenario: Chained transformations must be applied in reverse order
-  Given p ← point(1, 0, 1)
-    And A ← rotation_x(π / 2)
-    And B ← scaling(5, 5, 5)
-    And C ← translation(10, 5, 7)
-  When T ← C * B * A
-  Then T * p = point(15, 0, 7)
+TEST(TransformationsTest, ChainReverseOrder) {
+  /*
+  Scenario: Chained transformations must be applied in reverse order
+  */
+  Vector4f p = point(1, 0, 1);
+  Matrix4f A = rotation_x(M_PI / 2);
+  Matrix4f B = scaling(5, 5, 5);
+  Matrix4f C = translation(10, 5, 7);
+  Matrix4f T = C * B * A;
+  EXPECT_EQ(T * p, point(15, 0, 7));
+}
 
-Scenario: The transformation matrix for the default orientation
-  Given from ← point(0, 0, 0)
-    And to ← point(0, 0, -1)
-    And up ← vector(0, 1, 0)
-  When t ← view_transform(from, to, up)
-  Then t = identity_matrix
+// TEST(TransformationsTest, DefaultOrientationTransform) {
+//    /*
+//    Scenario: The transformation matrix for the default orientation
+//    */
+//    Vector4f from = point(0, 0, 0);
+//    Vector4f to = point(0, 0, -1);
+//    Vector4f up = point(0, 1, 0);
+//    Matrix4f t = view_transform(from, to, up);
+//    EXPECT_EQ(t, identity_matrix);
+//  }
 
-Scenario: A view transformation matrix looking in positive z direction
-  Given from ← point(0, 0, 0)
-    And to ← point(0, 0, 1)
-    And up ← vector(0, 1, 0)
-  When t ← view_transform(from, to, up)
-  Then t = scaling(-1, 1, -1)
+// TEST(TransformationsTest, DefaultOrientationTransform) {
+//    /*
+//    Scenario: The transformation matrix looking in positive z direction
+//    */
+//    Vector4f from = point(0, 0, 0);
+//    Vector4f to = point(0, 0, 1);
+//    Vector4f up = point(0, 1, 0);
+//    Matrix4f t = view_transform(from, to, up);
+//    EXPECT_EQ(t, scaling(-1, 1, -1));
+//  }
 
-Scenario: The view transformation moves the world
-  Given from ← point(0, 0, 8)
-    And to ← point(0, 0, 0)
-    And up ← vector(0, 1, 0)
-  When t ← view_transform(from, to, up)
-  Then t = translation(0, 0, -8)
+// TEST(TransformationsTest, ViewMovesWorld) {
+//    /*
+//    Scenario: The view transformation moves the world
+//    */
+//    Vector4f from = point(0, 0, 8);
+//    Vector4f to = point(0, 0, 0);
+//    Vector4f up = point(0, 1, 0);
+//    Matrix4f t = view_transform(from, to, up);
+//    EXPECT_EQ(t, translation(0, 0, -8));
+//  }
 
-Scenario: An arbitrary view transformation
-  Given from ← point(1, 3, 2)
-    And to ← point(4, -2, 8)
-    And up ← vector(1, 1, 0)
-  When t ← view_transform(from, to, up)
-  Then t is the following 4x4 matrix:
-      | -0.50709 | 0.50709 |  0.67612 | -2.36643 |
-      |  0.76772 | 0.60609 |  0.12122 | -2.82843 |
-      | -0.35857 | 0.59761 | -0.71714 |  0.00000 |
-      |  0.00000 | 0.00000 |  0.00000 |  1.00000 |
-*/
+// TEST(TransformationsTest, ArbitraryView) {
+//    /*
+//    Scenario: An arbitrary view transformation
+//    */
+//    Vector4f from = point(1, 3, 2);
+//    Vector4f to = point(4, -2, 8);
+//    Vector4f up = point(1, 1, 0);
+//    Matrix4f t = view_transform(from, to, up);
+//    Matrix4f expected;
+//    expected <<        -0.50709 , 0.50709 ,  0.67612 , -2.36643 ,
+//                        0.76772 , 0.60609 ,  0.12122 , -2.82843 ,
+//                       -0.35857 , 0.59761 , -0.71714 ,  0.00000 ,
+//                        0.00000 , 0.00000 ,  0.00000 ,  1.00000 ;
+//    EXPECT_EQ(t, expected);
+//  }
