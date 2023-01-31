@@ -5,14 +5,17 @@
 
 #include "./tuple.h"
 
+using Eigen::Matrix4f;
 using Eigen::Vector4f;
 
-class Ray
-{
-    Vector4f origin;
-    Vector4f direction;
-public:
-    Ray(Vector4f origin, Vector4f direction);
+class Ray {
+ public:
+  Vector4f origin;
+  Vector4f direction;
+
+  Ray(Vector4f origin, Vector4f direction);
+  Vector4f position(float t);
+  Ray transform(Matrix4f m);
 };
 
-#endif // RAY_H_
+#endif  // RAY_H_
