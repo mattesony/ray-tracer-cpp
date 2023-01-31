@@ -3,6 +3,7 @@
 #include <cmath>
 
 #include "../src/tuple.h"
+#include "./testing_tools.h"
 #include "gmock/gmock.h"
 
 using Eigen::Vector4f;
@@ -78,7 +79,7 @@ TEST(TransformationsTest, RotateX) {
   Matrix4f half_quarter = rotation_x(M_PI / 4);
   Matrix4f full_quarter = rotation_x(M_PI / 2);
   EXPECT_EQ(half_quarter * p, point(0, sqrtf(2) / 2, sqrtf(2) / 2));
-  EXPECT_EQ(full_quarter * p, point(0, 0, 1));
+  compareVectors(full_quarter * p, point(0, 0, 1));
 }
 
 TEST(TransformationsTest, InverseRotateX) {
@@ -87,7 +88,8 @@ TEST(TransformationsTest, InverseRotateX) {
   */
   Vector4f p = point(0, 1, 0);
   Matrix4f half_quarter = rotation_x(M_PI / 4);
-  EXPECT_EQ(half_quarter.inverse() * p, point(0, sqrtf(2) / 2, -sqrtf(2) / 2));
+  compareVectors(half_quarter.inverse() * p,
+                 point(0, sqrtf(2) / 2, -sqrtf(2) / 2));
 }
 
 TEST(TransformationsTest, RotateY) {
@@ -98,7 +100,7 @@ TEST(TransformationsTest, RotateY) {
   Matrix4f half_quarter = rotation_y(M_PI / 4);
   Matrix4f full_quarter = rotation_y(M_PI / 2);
   EXPECT_EQ(half_quarter * p, point(sqrtf(2) / 2, 0, sqrtf(2) / 2));
-  EXPECT_EQ(full_quarter * p, point(1, 0, 0));
+  compareVectors(full_quarter * p, point(1, 0, 0));
 }
 
 TEST(TransformationsTest, RotateZ) {
@@ -109,7 +111,7 @@ TEST(TransformationsTest, RotateZ) {
   Matrix4f half_quarter = rotation_z(M_PI / 4);
   Matrix4f full_quarter = rotation_z(M_PI / 2);
   EXPECT_EQ(half_quarter * p, point(-sqrtf(2) / 2, sqrtf(2) / 2, 0));
-  EXPECT_EQ(full_quarter * p, point(-1, 0, 0));
+  compareVectors(full_quarter * p, point(-1, 0, 0));
 }
 
 TEST(TransformationsTest, ShearXtoY) {
@@ -175,9 +177,9 @@ TEST(TransformationsTest, Sequence) {
   Matrix4f B = scaling(5, 5, 5);
   Matrix4f C = translation(10, 5, 7);
   Vector4f p2 = A * p;
-  EXPECT_EQ(p2, point(1, -1, 0));
+  compareVectors(p2, point(1, -1, 0));
   Vector4f p3 = B * p2;
-  EXPECT_EQ(p3, point(5, -5, 0));
+  compareVectors(p3, point(5, -5, 0));
   Vector4f p4 = C * p3;
   EXPECT_EQ(p4, point(15, 0, 7));
 }
