@@ -28,6 +28,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         src/main.cpp \
         src/ray.cpp \
+        src/sphere.cpp \
         src/transformations.cpp \
         src/tuple.cpp \
         src/window.cpp \
@@ -36,6 +37,7 @@ SOURCES += \
 HEADERS += \
     src/point.h \
     src/ray.h \
+    src/sphere.h \
     src/transformations.h \
     src/tuple.h \
     src/vector.h \
