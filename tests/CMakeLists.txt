@@ -12,7 +12,11 @@ add_executable (intersections_test intersections_test.cpp)
 target_link_libraries (intersections_test 
  PRIVATE
   GTest::GTest
-  sphere)
+  ray
+  intersection
+  sphere
+  transformations
+  tuple)
 gtest_discover_tests(intersections_test)
 
 add_executable (ray_test ray_test.cpp)
@@ -31,7 +35,9 @@ target_link_libraries (sphere_test
   GTest::GTest
   Eigen3::Eigen
   ray
+  intersection
   sphere
+  transformations
   tuple)
 gtest_discover_tests(sphere_test)
 

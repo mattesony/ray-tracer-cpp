@@ -11,7 +11,7 @@ QT       += core gui widgets
 TARGET = RayTracer
 TEMPLATE = app
 
-QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS += -std=c++17
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -26,6 +26,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+        src/intersection.cpp \
         src/main.cpp \
         src/ray.cpp \
         src/sphere.cpp \
@@ -35,6 +36,7 @@ SOURCES += \
         src/canvas.cpp
 
 HEADERS += \
+    src/intersection.h \
     src/point.h \
     src/ray.h \
     src/sphere.h \

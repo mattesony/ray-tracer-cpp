@@ -14,6 +14,6 @@ Ray::Ray(Vector4f origin, Vector4f vector) {
 
 Vector4f Ray::position(float t) { return this->origin + this->direction * t; }
 
-Ray Ray::transform(Matrix4f m) {
-  return Ray(m * this->origin, m * this->direction);
+Ray Ray::transform(Matrix4f matrix) {
+  return Ray(matrix * this->origin, matrix * this->direction);
 }

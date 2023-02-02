@@ -17,6 +17,8 @@ class Window : public QMainWindow {
   explicit Window(QWidget *parent = 0);
   void Repaint();
   ~Window();
+  void PaintTrajectory();
+  void PaintSphereIntersect();
 
  private:
   int PPM_WIDTH = 900;
