@@ -19,6 +19,23 @@ target_link_libraries (intersections_test
   tuple)
 gtest_discover_tests(intersections_test)
 
+add_executable (light_test light_test.cpp)
+target_link_libraries (light_test 
+ PRIVATE
+  GTest::GTest
+  light
+  tuple)
+gtest_discover_tests(light_test)
+
+add_executable (material_test material_test.cpp)
+target_link_libraries (material_test 
+ PRIVATE
+  GTest::GTest
+  light
+  material
+  tuple)
+gtest_discover_tests(material_test)
+
 add_executable (ray_test ray_test.cpp)
 target_link_libraries (ray_test 
  PRIVATE
@@ -34,8 +51,9 @@ target_link_libraries (sphere_test
  PRIVATE
   GTest::GTest
   Eigen3::Eigen
-  ray
   intersection
+  material
+  ray
   sphere
   transformations
   tuple)
@@ -49,4 +67,12 @@ target_link_libraries (transformations_test
   transformations
   tuple)
 gtest_discover_tests(transformations_test)
+
+add_executable (tuple_test tuple_test.cpp)
+target_link_libraries (tuple_test 
+ PRIVATE
+  GTest::GTest
+  Eigen3::Eigen
+  tuple)
+gtest_discover_tests(tuple_test)
 

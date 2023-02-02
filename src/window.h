@@ -19,6 +19,7 @@ class Window : public QMainWindow {
   ~Window();
   void PaintTrajectory();
   void PaintSphereIntersect();
+  void PaintSpherePhong();
 
  private:
   int PPM_WIDTH = 900;

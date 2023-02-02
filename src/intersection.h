@@ -25,4 +25,8 @@ std::vector<Intersection> intersections(VarArgs const&... args) {
 
 Intersection hit(std::vector<Intersection> intersections);
 
+// TODO: Move this to shape intersection logic
+std::vector<Intersection> buildIntersections(
+    std::shared_ptr<Sphere const> object, std::vector<float> ts);
+
 #endif  // INTERSECTION_H_

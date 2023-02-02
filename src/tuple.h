@@ -51,4 +51,8 @@ bool isPoint(Vector4f tuple);
 Vector4f vector(float x, float y, float z);
 bool isVector(Vector4f tuple);
 
+Vector3f color(float r, float g, float b);
+
+Vector4f reflect(Vector4f in, Vector4f normal);
+
 #endif  // TUPLE_H_

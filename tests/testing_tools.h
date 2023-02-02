@@ -13,5 +13,10 @@ void compareVectors(const Vector4f& result, const Vector4f& expected) {
     ASSERT_THAT(result(i), FloatNear(expected(i), 0.0001));
   }
 }
+void compareColors(const Vector3f& result, const Vector3f& expected) {
+  for (int i = 0; i < 3; i++) {
+    ASSERT_THAT(result(i), FloatNear(expected(i), 0.0001));
+  }
+}
 
 #endif  // TESTS_TESTING_TOOLS_H_

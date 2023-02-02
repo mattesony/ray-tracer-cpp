@@ -5,7 +5,10 @@
 #include <vector>
 
 Sphere::Sphere()
-    : origin(point(0, 0, 0)), radius(1), transform(Matrix4f::Identity()) {}
+    : origin(point(0, 0, 0)),
+      radius(1),
+      transform(Matrix4f::Identity()),
+      material(Material()) {}
 
 std::vector<float> Sphere::intersects(Ray& ray) {
   std::vector<float> output;
@@ -26,3 +29,13 @@ std::vector<float> Sphere::intersects(Ray& ray) {
 }
 
 void Sphere::set_transform(Matrix4f t) { transform = t; }
+
+Vector4f Sphere::normal_at(Vector4f point) const {
+  // Transform to object space
+  Vector4f objectPoint = this->transform.inverse() * point;
+  Vector4f objectNormal = objectPoint - this->origin;
+  // Transform back to normal space
+  Vector4f worldNormal = this->transform.inverse().transpose() * objectNormal;
+  worldNormal(3) = 0;
+  return worldNormal.normalized();
+}
