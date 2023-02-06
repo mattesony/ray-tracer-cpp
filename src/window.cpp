@@ -97,7 +97,7 @@ void Window::PaintSpherePhong() {
   Vector3f lightColor = {1, 1, 1};
   Light light = Light(lightPosition, lightColor);
 
-  shape->set_transform(rotation_z(M_PI / 4) * scaling(0.5, 1, 1));
+  // shape->set_transform(rotation_z(M_PI / 4) * scaling(0.5, 1, 1));
 
   for (int y = 0; y < canvas_pixels; y++) {
     float world_y = half - wall_pixel_size * y;

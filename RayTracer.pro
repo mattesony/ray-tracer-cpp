@@ -35,7 +35,8 @@ SOURCES += \
         src/transformations.cpp \
         src/tuple.cpp \
         src/window.cpp \
-        src/canvas.cpp
+        src/canvas.cpp \
+        src/world.cpp
 
 HEADERS += \
     src/intersection.h \
@@ -48,7 +49,8 @@ HEADERS += \
     src/tuple.h \
     src/vector.h \
     src/window.h \
-    src/canvas.h
+    src/canvas.h \
+    src/world.h
 
 FORMS += \
     src/window.ui

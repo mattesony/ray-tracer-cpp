@@ -76,3 +76,13 @@ target_link_libraries (tuple_test
   tuple)
 gtest_discover_tests(tuple_test)
 
+add_executable (world_test world_test.cpp)
+target_link_libraries (world_test 
+ PRIVATE
+  GTest::GTest
+  Eigen3::Eigen
+  light
+  sphere
+  world)
+gtest_discover_tests(world_test)
+

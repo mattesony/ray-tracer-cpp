@@ -21,3 +21,6 @@ target_link_libraries(transformations Eigen3::Eigen)
 
 add_library(tuple tuple.cpp)
 target_link_libraries(tuple Eigen3::Eigen)
+
+add_library(world world.cpp)
+target_link_libraries(light sphere world Eigen3::Eigen)
