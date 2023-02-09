@@ -12,6 +12,7 @@ add_executable (intersections_test intersections_test.cpp)
 target_link_libraries (intersections_test 
  PRIVATE
   GTest::GTest
+  Eigen3::Eigen
   ray
   intersection
   sphere
@@ -23,6 +24,7 @@ add_executable (light_test light_test.cpp)
 target_link_libraries (light_test 
  PRIVATE
   GTest::GTest
+  Eigen3::Eigen
   light
   tuple)
 gtest_discover_tests(light_test)
@@ -31,6 +33,7 @@ add_executable (material_test material_test.cpp)
 target_link_libraries (material_test 
  PRIVATE
   GTest::GTest
+  Eigen3::Eigen
   light
   material
   tuple)
